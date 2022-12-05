@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.DPassengerInfoMapper">
+    
+    <resultMap type="DPassengerInfo" id="DPassengerInfoResult">
+        <result property="id"    column="id"    />
+        <result property="subscribeToday"    column="subscribe_today"    />
+        <result property="passengerTime"    column="passenger_time"    />
+        <result property="timeLine"    column="time_line"    />
+        <result property="delStatus"    column="del_status"    />
+    </resultMap>
+
+    <sql id="selectDPassengerInfoVo">
+        select id, subscribe_today, passenger_time, time_line, del_status from d_passenger_info
+    </sql>
+
+    <select id="selectDPassengerInfoList" parameterType="DPassengerInfo" resultMap="DPassengerInfoResult">
+        <include refid="selectDPassengerInfoVo"/>
+        <where>  
+            <if test="subscribeToday != null  and subscribeToday != ''"> and subscribe_today = #{subscribeToday}</if>
+            <if test="passengerTime != null  and passengerTime != ''"> and passenger_time = #{passengerTime}</if>
+            <if test="timeLine != null  and timeLine != ''"> and time_line = #{timeLine}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectDPassengerInfoById" parameterType="Long" resultMap="DPassengerInfoResult">
+        <include refid="selectDPassengerInfoVo"/>
+        where id = #{id}
+    </select>
+    <select id="nums" resultType="com.ruoyi.business.domain.DPassengerInfo" resultMap="DPassengerInfoResult">
+        select * from d_passenger_info d  order by d.id
+    </select>
+
+    <insert id="insertDPassengerInfo" parameterType="DPassengerInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into d_passenger_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subscribeToday != null">subscribe_today,</if>
+            <if test="passengerTime != null">passenger_time,</if>
+            <if test="timeLine != null">time_line,</if>
+            <if test="delStatus != null">del_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subscribeToday != null">#{subscribeToday},</if>
+            <if test="passengerTime != null">#{passengerTime},</if>
+            <if test="timeLine != null">#{timeLine},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDPassengerInfo" parameterType="DPassengerInfo">
+        update d_passenger_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="subscribeToday != null">subscribe_today = #{subscribeToday},</if>
+            <if test="passengerTime != null">passenger_time = #{passengerTime},</if>
+            <if test="timeLine != null">time_line = #{timeLine},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDPassengerInfoById" parameterType="Long">
+        delete from d_passenger_info where id = #{id}
+    </delete>
+
+    <delete id="deleteDPassengerInfoByIds" parameterType="String">
+        delete from d_passenger_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

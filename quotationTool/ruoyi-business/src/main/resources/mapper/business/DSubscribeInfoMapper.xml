@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.DSubscribeInfoMapper">
+    
+    <resultMap type="DSubscribeInfo" id="DSubscribeInfoResult">
+        <result property="id"    column="id"    />
+        <result property="siteName"    column="site_name"    />
+        <result property="subscribeTomorrow"    column="subscribe_tomorrow"    />
+        <result property="weekActivities"    column="week_activities"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="delStatus"    column="del_status"    />
+    </resultMap>
+
+    <sql id="selectDSubscribeInfoVo">
+        select id, site_name, subscribe_tomorrow, week_activities, create_time, del_status from d_subscribe_info
+    </sql>
+
+    <select id="selectDSubscribeInfoList" parameterType="DSubscribeInfo" resultMap="DSubscribeInfoResult">
+        <include refid="selectDSubscribeInfoVo"/>
+        <where>  
+            <if test="siteName != null  and siteName != ''"> and site_name like concat('%', #{siteName}, '%')</if>
+            <if test="subscribeTomorrow != null  and subscribeTomorrow != ''"> and subscribe_tomorrow = #{subscribeTomorrow}</if>
+            <if test="weekActivities != null  and weekActivities != ''"> and week_activities = #{weekActivities}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectDSubscribeInfoById" parameterType="Long" resultMap="DSubscribeInfoResult">
+        <include refid="selectDSubscribeInfoVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectNames" resultType="java.lang.String">
+        select site_name from d_subscribe_info;
+    </select>
+<!--    排序-->
+    <select id="selectorderby" resultType="com.ruoyi.business.domain.DSubscribeInfo" resultMap="DSubscribeInfoResult">
+        SELECT
+            id,
+            site_name,
+            subscribe_tomorrow,
+            week_activities,
+            create_time
+        FROM
+            d_subscribe_info
+        ORDER BY
+            subscribe_tomorrow + 0 DESC
+    </select>
+
+    <insert id="insertDSubscribeInfo" parameterType="DSubscribeInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into d_subscribe_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="siteName != null">site_name,</if>
+            <if test="subscribeTomorrow != null">subscribe_tomorrow,</if>
+            <if test="weekActivities != null">week_activities,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delStatus != null">del_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="siteName != null">#{siteName},</if>
+            <if test="subscribeTomorrow != null">#{subscribeTomorrow},</if>
+            <if test="weekActivities != null">#{weekActivities},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDSubscribeInfo" parameterType="DSubscribeInfo">
+        update d_subscribe_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="siteName != null">site_name = #{siteName},</if>
+            <if test="subscribeTomorrow != null">subscribe_tomorrow = #{subscribeTomorrow},</if>
+            <if test="weekActivities != null">week_activities = #{weekActivities},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDSubscribeInfoById" parameterType="Long">
+        delete from d_subscribe_info where id = #{id}
+    </delete>
+
+    <delete id="deleteDSubscribeInfoByIds" parameterType="String">
+        delete from d_subscribe_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
+</mapper>

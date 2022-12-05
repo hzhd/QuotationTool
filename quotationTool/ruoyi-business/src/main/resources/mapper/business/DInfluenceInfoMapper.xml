@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.DInfluenceInfoMapper">
+    
+    <resultMap type="DInfluenceInfo" id="DInfluenceInfoResult">
+        <result property="id"    column="id"    />
+        <result property="influenceName"    column="influence_name"    />
+        <result property="hotMsg"    column="hot_msg"    />
+        <result property="dayNo"    column="day_no"    />
+        <result property="weekNo"    column="week_no"    />
+        <result property="monthNo"    column="month_no"    />
+        <result property="yearNo"    column="year_no"    />
+        <result property="delStatus"    column="del_status"    />
+    </resultMap>
+
+    <sql id="selectDInfluenceInfoVo">
+        select id, influence_name, hot_msg, day_no, week_no, month_no, year_no, del_status from d_influence_info
+    </sql>
+
+    <select id="selectDInfluenceInfoList" parameterType="DInfluenceInfo" resultMap="DInfluenceInfoResult">
+        <include refid="selectDInfluenceInfoVo"/>
+        <where>  
+            <if test="influenceName != null  and influenceName != ''"> and influence_name like concat('%', #{influenceName}, '%')</if>
+            <if test="hotMsg != null  and hotMsg != ''"> and hot_msg = #{hotMsg}</if>
+            <if test="dayNo != null "> and day_no = #{dayNo}</if>
+            <if test="weekNo != null "> and week_no = #{weekNo}</if>
+            <if test="monthNo != null "> and month_no = #{monthNo}</if>
+            <if test="yearNo != null "> and year_no = #{yearNo}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectDInfluenceInfoById" parameterType="Long" resultMap="DInfluenceInfoResult">
+        <include refid="selectDInfluenceInfoVo"/>
+        where id = #{id}
+    </select>
+    <!--    获取每天的数据-->
+    <select id="selectDays" resultType="com.ruoyi.business.domain.DInfluenceInfo" resultMap="DInfluenceInfoResult">
+        select influence_name,hot_msg,day_no from d_influence_info ;
+    </select>
+    <!--    获取周的数据-->
+    <select id="selectWeeks" resultType="com.ruoyi.business.domain.DInfluenceInfo" resultMap="DInfluenceInfoResult">
+        select influence_name,hot_msg,week_no from d_influence_info ;
+    </select>
+    <!--    获取月的数据-->
+    <select id="selectMonths" resultType="com.ruoyi.business.domain.DInfluenceInfo" resultMap="DInfluenceInfoResult">
+        select influence_name,hot_msg,month_no from d_influence_info ;
+    </select>
+    <!--    获取年的数据-->
+    <select id="selectYears" resultType="com.ruoyi.business.domain.DInfluenceInfo" resultMap="DInfluenceInfoResult">
+        select influence_name,hot_msg,year_no from d_influence_info ;
+    </select>
+<!--    首页大屏 根据影响力展示-->
+    <select id="selectNames" resultType="com.ruoyi.business.domain.DInfluenceInfo" resultMap="DInfluenceInfoResult">
+        select d.influence_name,d.day_no from d_influence_info d ORDER BY d.day_no desc
+    </select>
+
+    <insert id="insertDInfluenceInfo" parameterType="DInfluenceInfo">
+        insert into d_influence_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="influenceName != null">influence_name,</if>
+            <if test="hotMsg != null">hot_msg,</if>
+            <if test="dayNo != null">day_no,</if>
+            <if test="weekNo != null">week_no,</if>
+            <if test="monthNo != null">month_no,</if>
+            <if test="yearNo != null">year_no,</if>
+            <if test="delStatus != null">del_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="influenceName != null">#{influenceName},</if>
+            <if test="hotMsg != null">#{hotMsg},</if>
+            <if test="dayNo != null">#{dayNo},</if>
+            <if test="weekNo != null">#{weekNo},</if>
+            <if test="monthNo != null">#{monthNo},</if>
+            <if test="yearNo != null">#{yearNo},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDInfluenceInfo" parameterType="DInfluenceInfo">
+        update d_influence_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="influenceName != null">influence_name = #{influenceName},</if>
+            <if test="hotMsg != null">hot_msg = #{hotMsg},</if>
+            <if test="dayNo != null">day_no = #{dayNo},</if>
+            <if test="weekNo != null">week_no = #{weekNo},</if>
+            <if test="monthNo != null">month_no = #{monthNo},</if>
+            <if test="yearNo != null">year_no = #{yearNo},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDInfluenceInfoById" parameterType="Long">
+        delete from d_influence_info where id = #{id}
+    </delete>
+
+    <delete id="deleteDInfluenceInfoByIds" parameterType="String">
+        delete from d_influence_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

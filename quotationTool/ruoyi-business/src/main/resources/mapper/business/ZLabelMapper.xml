@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.ZLabelMapper">
+    
+    <resultMap type="ZLabel" id="ZLabelResult">
+        <result property="labelId"    column="label_id"    />
+        <result property="labelName"    column="label_name"    />
+        <result property="labelFeatures"    column="label_features"    />
+        <result property="labelType"    column="label_type"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectZLabelVo">
+        select label_id, label_name, label_features, label_type, status, del_flag, create_by, create_time, update_by, update_time, remark from z_label
+    </sql>
+
+    <select id="selectZLabelList" parameterType="ZLabel" resultMap="ZLabelResult">
+        <include refid="selectZLabelVo"/>
+        <where>  
+            <if test="labelName != null  and labelName != ''"> and label_name like concat('%', #{labelName}, '%')</if>
+            <if test="labelFeatures != null  and labelFeatures != ''"> and label_features = #{labelFeatures}</if>
+            <if test="labelType != null  and labelType != ''"> and label_type = #{labelType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectZLabelByLabelId" parameterType="Long" resultMap="ZLabelResult">
+        <include refid="selectZLabelVo"/>
+        where label_id = #{labelId}
+    </select>
+        
+    <insert id="insertZLabel" parameterType="ZLabel">
+        insert into z_label
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="labelId != null">label_id,</if>
+            <if test="labelName != null">label_name,</if>
+            <if test="labelFeatures != null">label_features,</if>
+            <if test="labelType != null">label_type,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="labelId != null">#{labelId},</if>
+            <if test="labelName != null">#{labelName},</if>
+            <if test="labelFeatures != null">#{labelFeatures},</if>
+            <if test="labelType != null">#{labelType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZLabel" parameterType="ZLabel">
+        update z_label
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="labelName != null">label_name = #{labelName},</if>
+            <if test="labelFeatures != null">label_features = #{labelFeatures},</if>
+            <if test="labelType != null">label_type = #{labelType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where label_id = #{labelId}
+    </update>
+
+    <delete id="deleteZLabelByLabelId" parameterType="Long">
+        delete from z_label where label_id = #{labelId}
+    </delete>
+
+    <delete id="deleteZLabelByLabelIds" parameterType="String">
+        delete from z_label where label_id in 
+        <foreach item="labelId" collection="array" open="(" separator="," close=")">
+            #{labelId}
+        </foreach>
+    </delete>
+</mapper>

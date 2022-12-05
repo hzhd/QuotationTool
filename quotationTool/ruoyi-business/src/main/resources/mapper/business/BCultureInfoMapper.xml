@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.BCultureInfoMapper">
+    
+    <resultMap type="BCultureInfo" id="BCultureInfoResult">
+        <result property="id"    column="id"    />
+        <result property="culTitle"    column="cul_title"    />
+        <result property="culTime"    column="cul_time"    />
+        <result property="culName"    column="cul_name"    />
+        <result property="culMsg"    column="cul_msg"    />
+        <result property="culUrl"    column="cul_url"    />
+        <result property="culAddr"    column="cul_addr"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delStatus"    column="del_status"    />
+    </resultMap>
+
+    <sql id="selectBCultureInfoVo">
+        select id, cul_title, cul_time, cul_name, cul_msg, cul_url, cul_addr, create_time, update_time, del_status from b_culture_info
+    </sql>
+
+    <select id="selectBCultureInfoList" parameterType="BCultureInfo" resultMap="BCultureInfoResult">
+        <include refid="selectBCultureInfoVo"/>
+        <where>  
+            <if test="culTitle != null  and culTitle != ''"> and cul_title = #{culTitle}</if>
+            <if test="culTime != null "> and cul_time = #{culTime}</if>
+            <if test="culName != null  and culName != ''"> and cul_name like concat('%', #{culName}, '%')</if>
+            <if test="culMsg != null  and culMsg != ''"> and cul_msg like concat('%', #{culMsg}, '%')</if>
+            <if test="culUrl != null  and culUrl != ''"> and cul_url = #{culUrl}</if>
+            <if test="culAddr != null  and culAddr != ''"> and cul_addr = #{culAddr}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectBCultureInfoById" parameterType="Long" resultMap="BCultureInfoResult">
+        <include refid="selectBCultureInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBCultureInfo" parameterType="BCultureInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into b_culture_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="culTitle != null">cul_title,</if>
+            <if test="culTime != null">cul_time,</if>
+            <if test="culName != null">cul_name,</if>
+            <if test="culMsg != null">cul_msg,</if>
+            <if test="culUrl != null">cul_url,</if>
+            <if test="culAddr != null">cul_addr,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delStatus != null">del_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="culTitle != null">#{culTitle},</if>
+            <if test="culTime != null">#{culTime},</if>
+            <if test="culName != null">#{culName},</if>
+            <if test="culMsg != null">#{culMsg},</if>
+            <if test="culUrl != null">#{culUrl},</if>
+            <if test="culAddr != null">#{culAddr},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBCultureInfo" parameterType="BCultureInfo">
+        update b_culture_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="culTitle != null">cul_title = #{culTitle},</if>
+            <if test="culTime != null">cul_time = #{culTime},</if>
+            <if test="culName != null">cul_name = #{culName},</if>
+            <if test="culMsg != null">cul_msg = #{culMsg},</if>
+            <if test="culUrl != null">cul_url = #{culUrl},</if>
+            <if test="culAddr != null">cul_addr = #{culAddr},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBCultureInfoById" parameterType="Long">
+        delete from b_culture_info where id = #{id}
+    </delete>
+
+    <delete id="deleteBCultureInfoByIds" parameterType="String">
+        delete from b_culture_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

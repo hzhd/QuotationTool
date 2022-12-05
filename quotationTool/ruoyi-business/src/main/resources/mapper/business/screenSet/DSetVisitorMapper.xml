@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.screenSet.mapper.DSetVisitorMapper">
+    
+    <resultMap type="DSetVisitor" id="DSetVisitorResult">
+        <result property="id"    column="id"    />
+        <result property="video"    column="video"    />
+        <result property="zbImage"    column="zb_image"    />
+        <result property="zbTitle"    column="zb_title"    />
+        <result property="zbTime"    column="zb_time"    />
+        <result property="zbCount"    column="zb_count"    />
+        <result property="zxImage"    column="zx_image"    />
+        <result property="zxTitle"    column="zx_title"    />
+        <result property="zxTime"    column="zx_time"    />
+    </resultMap>
+
+    <sql id="selectDSetVisitorVo">
+        select id, video, zb_image, zb_title, zb_time, zb_count, zx_image, zx_title, zx_time from d_set_visitor
+    </sql>
+
+    <select id="selectDSetVisitorList" parameterType="DSetVisitor" resultMap="DSetVisitorResult">
+        <include refid="selectDSetVisitorVo"/>
+        <where>  
+            <if test="video != null  and video != ''"> and video = #{video}</if>
+            <if test="zbImage != null  and zbImage != ''"> and zb_image = #{zbImage}</if>
+            <if test="zbTitle != null  and zbTitle != ''"> and zb_title like concat('%', #{zbTitle}, '%')</if>
+            <if test="zbTime != null "> and zb_time = #{zbTime}</if>
+            <if test="zbCount != null  and zbCount != ''"> and zb_count = #{zbCount}</if>
+            <if test="zxImage != null  and zxImage != ''"> and zx_image = #{zxImage}</if>
+            <if test="zxTitle != null  and zxTitle != ''"> and zx_title =  like concat'%', #{zxTitle}, '%')</if>
+            <if test="zxTime != null "> and zx_time = #{zxTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectDSetVisitorById" parameterType="Long" resultMap="DSetVisitorResult">
+        <include refid="selectDSetVisitorVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDSetVisitor" parameterType="DSetVisitor">
+        insert into d_set_visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="video != null and video != ''">video,</if>
+            <if test="zbImage != null and zbImage != ''">zb_image,</if>
+            <if test="zbTitle != null and zbTitle != ''">zb_title,</if>
+            <if test="zbTime != null">zb_time,</if>
+            <if test="zbCount != null and zbCount != ''">zb_count,</if>
+            <if test="zxImage != null and zxImage != ''">zx_image,</if>
+            <if test="zxTitle != null and zxTitle != ''">zx_title,</if>
+            <if test="zxTime != null">zx_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="video != null and video != ''">#{video},</if>
+            <if test="zbImage != null and zbImage != ''">#{zbImage},</if>
+            <if test="zbTitle != null and zbTitle != ''">#{zbTitle},</if>
+            <if test="zbTime != null">#{zbTime},</if>
+            <if test="zbCount != null and zbCount != ''">#{zbCount},</if>
+            <if test="zxImage != null and zxImage != ''">#{zxImage},</if>
+            <if test="zxTitle != null and zxTitle != ''">#{zxTitle},</if>
+            <if test="zxTime != null">#{zxTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDSetVisitor" parameterType="DSetVisitor">
+        update d_set_visitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="video != null and video != ''">video = #{video},</if>
+            <if test="zbImage != null and zbImage != ''">zb_image = #{zbImage},</if>
+            <if test="zbTitle != null and zbTitle != ''">zb_title = #{zbTitle},</if>
+            <if test="zbTime != null">zb_time = #{zbTime},</if>
+            <if test="zbCount != null and zbCount != ''">zb_count = #{zbCount},</if>
+            <if test="zxImage != null and zxImage != ''">zx_image = #{zxImage},</if>
+            <if test="zxTitle != null and zxTitle != ''">zx_title = #{zxTitle},</if>
+            <if test="zxTime != null">zx_time = #{zxTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDSetVisitorById" parameterType="Long">
+        delete from d_set_visitor where id = #{id}
+    </delete>
+
+    <delete id="deleteDSetVisitorByIds" parameterType="String">
+        delete from d_set_visitor where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

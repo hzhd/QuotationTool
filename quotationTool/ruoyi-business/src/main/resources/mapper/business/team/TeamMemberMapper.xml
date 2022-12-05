@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.team.mapper.TeamMemberMapper">
+    
+    <resultMap type="TeamMember" id="TeamMemberResult">
+        <result property="id"    column="id"    />
+        <result property="memberName"    column="member_name"    />
+        <result property="memberSex"    column="member_sex"    />
+        <result property="memberPicture"    column="member_picture"    />
+        <result property="teamId"    column="team_id"    />
+        <result property="joinTime"    column="join_time"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updatorId"    column="updator_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delTag"    column="del_tag"    />
+        <result property="recVersion"    column="rec_version"    />
+    </resultMap>
+
+    <sql id="selectTeamMemberVo">
+        select id, member_name, member_sex, member_picture, team_id, join_time, phone, email, creator_id, create_by, create_time, updator_id, update_by, update_time, del_tag, rec_version from t_team_member
+    </sql>
+
+    <select id="selectTeamMemberList" parameterType="TeamMember" resultMap="TeamMemberResult">
+        <include refid="selectTeamMemberVo"/>
+        <where>  
+            <if test="memberName != null  and memberName != ''"> and member_name like concat('%', #{memberName}, '%')</if>
+            <if test="memberSex != null "> and member_sex = #{memberSex}</if>
+            <if test="memberPicture != null  and memberPicture != ''"> and member_picture = #{memberPicture}</if>
+            <if test="teamId != null "> and team_id = #{teamId}</if>
+            <if test="params.beginJoinTime != null and params.beginJoinTime != '' and params.endJoinTime != null and params.endJoinTime != ''"> and join_time between #{params.beginJoinTime} and #{params.endJoinTime}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="creatorId != null "> and creator_id = #{creatorId}</if>
+            <if test="updatorId != null "> and updator_id = #{updatorId}</if>
+            <if test="delTag != null "> and del_tag = #{delTag}</if>
+            <if test="recVersion != null "> and rec_version = #{recVersion}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeamMemberById" parameterType="Integer" resultMap="TeamMemberResult">
+        <include refid="selectTeamMemberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeamMember" parameterType="TeamMember">
+        insert into t_team_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="memberName != null">member_name,</if>
+            <if test="memberSex != null">member_sex,</if>
+            <if test="memberPicture != null">member_picture,</if>
+            <if test="teamId != null">team_id,</if>
+            <if test="joinTime != null">join_time,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updatorId != null">updator_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delTag != null">del_tag,</if>
+            <if test="recVersion != null">rec_version,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="memberName != null">#{memberName},</if>
+            <if test="memberSex != null">#{memberSex},</if>
+            <if test="memberPicture != null">#{memberPicture},</if>
+            <if test="teamId != null">#{teamId},</if>
+            <if test="joinTime != null">#{joinTime},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="creatorId != null">#{creatorId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updatorId != null">#{updatorId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delTag != null">#{delTag},</if>
+            <if test="recVersion != null">#{recVersion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeamMember" parameterType="TeamMember">
+        update t_team_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberName != null">member_name = #{memberName},</if>
+            <if test="memberSex != null">member_sex = #{memberSex},</if>
+            <if test="memberPicture != null">member_picture = #{memberPicture},</if>
+            <if test="teamId != null">team_id = #{teamId},</if>
+            <if test="joinTime != null">join_time = #{joinTime},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updatorId != null">updator_id = #{updatorId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delTag != null">del_tag = #{delTag},</if>
+            <if test="recVersion != null">rec_version = #{recVersion},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeamMemberById" parameterType="Integer">
+        delete from t_team_member where id = #{id}
+    </delete>
+
+    <delete id="deleteTeamMemberByIds" parameterType="String">
+        delete from t_team_member where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
