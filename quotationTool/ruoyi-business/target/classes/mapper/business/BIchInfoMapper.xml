@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.BIchInfoMapper">
+    
+    <resultMap type="BIchInfo" id="BIchInfoResult">
+        <result property="ichId"    column="ich_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectContent"    column="project_content"    />
+        <result property="projectVoice"    column="project_voice"    />
+        <result property="projectMsg"    column="project_msg"    />
+        <result property="projectVodeo"    column="project_vodeo"    />
+        <result property="projectLabel"    column="project_label"    />
+        <result property="projectComment"    column="project_comment"    />
+        <result property="attrSite"    column="attr_site"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delStatus"    column="del_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="projectType"    column="project_type"    />
+        <result property="tipContent"    column="tip_content"    />
+        <result property="projectStatus"    column="project_status"    />
+        <result property="xcdpFlag"    column="xcdp_flag"    />
+    </resultMap>
+
+    <sql id="selectBIchInfoVo">
+        select ich_id, project_name, project_content, project_voice, project_msg, project_vodeo, project_label, project_comment, attr_site, create_by, create_time, update_by, update_time, del_status, remark, project_type, tip_content, project_status, xcdp_flag from b_ich_info
+    </sql>
+
+    <select id="selectBIchInfoList" parameterType="BIchInfo" resultMap="BIchInfoResult">
+        <include refid="selectBIchInfoVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="projectContent != null  and projectContent != ''"> and project_content = #{projectContent}</if>
+            <if test="projectVoice != null  and projectVoice != ''"> and project_voice = #{projectVoice}</if>
+            <if test="projectMsg != null  and projectMsg != ''"> and project_msg = #{projectMsg}</if>
+            <if test="projectVodeo != null  and projectVodeo != ''"> and project_vodeo = #{projectVodeo}</if>
+            <if test="projectLabel != null  and projectLabel != ''"> and project_label = #{projectLabel}</if>
+            <if test="projectComment != null  and projectComment != ''"> and project_comment = #{projectComment}</if>
+            <if test="attrSite != null  and attrSite != ''"> and attr_site = #{attrSite}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+            <if test="projectType != null  and projectType != ''"> and project_type = #{projectType}</if>
+            <if test="tipContent != null  and tipContent != ''"> and tip_content = #{tipContent}</if>
+            <if test="projectStatus != null "> and project_status = #{projectStatus}</if>
+            <if test="xcdpFlag != null "> and xcdp_flag = #{xcdpFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectBIchInfoByIchId" parameterType="Integer" resultMap="BIchInfoResult">
+        <include refid="selectBIchInfoVo"/>
+        where ich_id = #{ichId}
+    </select>
+        
+    <insert id="insertBIchInfo" parameterType="BIchInfo" useGeneratedKeys="true" keyProperty="ichId">
+        insert into b_ich_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">project_name,</if>
+            <if test="projectContent != null">project_content,</if>
+            <if test="projectVoice != null">project_voice,</if>
+            <if test="projectMsg != null">project_msg,</if>
+            <if test="projectVodeo != null">project_vodeo,</if>
+            <if test="projectLabel != null">project_label,</if>
+            <if test="projectComment != null">project_comment,</if>
+            <if test="attrSite != null">attr_site,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delStatus != null">del_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="projectType != null">project_type,</if>
+            <if test="tipContent != null">tip_content,</if>
+            <if test="projectStatus != null">project_status,</if>
+            <if test="xcdpFlag != null">xcdp_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">#{projectName},</if>
+            <if test="projectContent != null">#{projectContent},</if>
+            <if test="projectVoice != null">#{projectVoice},</if>
+            <if test="projectMsg != null">#{projectMsg},</if>
+            <if test="projectVodeo != null">#{projectVodeo},</if>
+            <if test="projectLabel != null">#{projectLabel},</if>
+            <if test="projectComment != null">#{projectComment},</if>
+            <if test="attrSite != null">#{attrSite},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="projectType != null">#{projectType},</if>
+            <if test="tipContent != null">#{tipContent},</if>
+            <if test="projectStatus != null">#{projectStatus},</if>
+            <if test="xcdpFlag != null">#{xcdpFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBIchInfo" parameterType="BIchInfo">
+        update b_ich_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="projectContent != null">project_content = #{projectContent},</if>
+            <if test="projectVoice != null">project_voice = #{projectVoice},</if>
+            <if test="projectMsg != null">project_msg = #{projectMsg},</if>
+            <if test="projectVodeo != null">project_vodeo = #{projectVodeo},</if>
+            <if test="projectLabel != null">project_label = #{projectLabel},</if>
+            <if test="projectComment != null">project_comment = #{projectComment},</if>
+            <if test="attrSite != null">attr_site = #{attrSite},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="projectType != null">project_type = #{projectType},</if>
+            <if test="tipContent != null">tip_content = #{tipContent},</if>
+            <if test="projectStatus != null">project_status = #{projectStatus},</if>
+            <if test="xcdpFlag != null">xcdp_flag = #{xcdpFlag},</if>
+        </trim>
+        where ich_id = #{ichId}
+    </update>
+
+    <delete id="deleteBIchInfoByIchId" parameterType="Integer">
+        delete from b_ich_info where ich_id = #{ichId}
+    </delete>
+
+    <delete id="deleteBIchInfoByIchIds" parameterType="String">
+        delete from b_ich_info where ich_id in 
+        <foreach item="ichId" collection="array" open="(" separator="," close=")">
+            #{ichId}
+        </foreach>
+    </delete>
+</mapper>

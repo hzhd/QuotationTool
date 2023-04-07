@@ -1,0 +1,95 @@
+@import '@/assets/styles/mixin2.scss';
+
+.gameSelect {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url(../../../assets/images/third-bg.png) no-repeat center;
+  justify-content: center;
+  align-items: center;
+  background-size: 100% 100%;
+  z-index: 0;
+}
+.topWrap{
+  background:url(../../../assets/images/top.jpg) no-repeat center;
+  z-index: 99999 !important;
+  max-width: 100%;
+  position: relative;
+  right: auto;
+  top: 0;
+  background-size: cover;
+  background-size: 100% 100%;
+  height: 66px;
+}
+.logoBanner{  
+  height: 80px;
+  background-color: #ffff;
+  width: 100%;
+  line-height: 80px;
+  .logo_div{
+    width: 50%;
+    float: left;
+    .bosch_logo{
+      width: 150px;
+      height: auto;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+  }
+  .logo_div2{
+    width: 50%;
+    float: right;
+    .bosch_logo2{
+      max-width: 200px;
+      height: auto;
+      vertical-align: middle;
+    }
+  }
+}
+.btnContinue{
+  position: absolute;
+  top: 90%;
+  left: 15%;
+  align-items: center;
+  width: 70%;
+  height: 50px;
+}
+
+.bottomImg{
+  background:url(../../../assets/images/haibao.jpg) no-repeat center;
+  z-index: -99999 !important;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-size:  100% 100%;
+  height: 130px;
+}
+.blankDiv{
+  height: 130px;
+  width: 100%;
+  position: relative;
+  opacity: 0;
+
+}
+.siteImg{
+  margin: 10px 20px 20px 20px;
+  height: 200px;
+}
+
+
+.topTips{
+  margin:20px 20px 5px 20px;
+  .tips{
+    text-align: left;
+    font-size: 14px;
+    padding-top: 50px;
+    line-height: 30px;
+  }
+}
+.siteTips{
+  margin: 20px 20px 5px 20px;
+  font-size: 14px;
+}
+
+

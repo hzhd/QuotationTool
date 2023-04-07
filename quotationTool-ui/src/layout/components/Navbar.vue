@@ -5,7 +5,7 @@
         <!-- <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
         <div style="display: flex; align-content: center">
           <img src="../../assets/images/logo.png" alt="" class="logos" />
-          <div class="titles">浦东群艺馆数字化应用平台</div>
+          <div class="titles">博世热力采暖询价管理平台</div>
         </div>
         <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!topNav"/> -->
         <!-- <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav" /> -->
@@ -160,7 +160,7 @@ export default {
       })
         .then(() => {
           this.$store.dispatch("LogOut").then(() => {
-            location.href = "/index";
+            location.href = "/index.html";
           });
         })
         .catch(() => {});
@@ -263,8 +263,8 @@ export default {
 }
 
 .logos {
-  width: 221px;
-  height: 67px;
+  width: 168px;
+  height: 56px;
   line-height: 87px;
   margin-left: 21px;
   margin-right: 8px;

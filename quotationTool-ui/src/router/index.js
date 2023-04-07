@@ -46,6 +46,12 @@ export const constantRoutes = [{
         hidden: true
     },
     {
+        path: '/ssoLogin',
+        component: () =>
+            import ('@/views/Login/Login'),
+        hidden: true
+    },
+    {
         path: '/register',
         component: () =>
             import ('@/views/register'),
@@ -87,8 +93,130 @@ export const constantRoutes = [{
             name: 'Profile',
             meta: { title: '个人中心', icon: 'user' }
         }]
-    }
+    },
+    // {
+    //     path: '/quotation',
+    //     hidden: true,
+    //     name: 'quotation',
+    //     // redirect: 'apiDoc',
+    //     component: () =>
+    //         import ('@/views/quotation/register'),
+    //     children: [{
+    //         path: '/apiDoc',
+    //         component: () =>
+    //             import ('@/views/quotation/apiDoc'),
+    //         name: 'apiDoc',
+    //         meta: { title: '首页', icon: 'dashboard', }
+    //     }]
+    // },
+    {
+        path: '/quotation/register',
+        component: () =>
+                import ('@/views/quotation/register'),
+        hidden: true
+    },
+    {
+        path: '/quotation/apiDoc',
+        component: () =>
+                import ('@/views/quotation/apiDoc'),
+        hidden: true
+    },
+    {
+        path: '/quotation/first',
+        component: () =>
+                import ('@/views/quotation/first/first'),
+        hidden: true
+    },
+    {
+        path: '/quotation/second',
+        component: () =>
+                import ('@/views/quotation/second/second'),
+        hidden: true
+    },
+    {
+        path: '/quotation/third',
+        component: () =>
+                import ('@/views/quotation/third/third'),
+        hidden: true
+    },
+    {
+        path: '/quotation/fourth',
+        component: () =>
+                import ('@/views/quotation/fourth/fourth'),
+        hidden: true
+    },
+    {
+        path: '/quotation/fifth',
+        component: () =>
+                import ('@/views/quotation/fifth/fifth'),
+        hidden: true
+    },
+    {
+        path: '/quotation/sixth',
+        component: () =>
+                import ('@/views/quotation/sixth/sixth'),
+        hidden: true
+    },
+    {
+        path: '/quotation/seventh',
+        component: () =>
+                import ('@/views/quotation/seventh/seventh'),
+        hidden: true
+    },
+    {
+        path: '/quotation/eighth',
+        component: () =>
+                import ('@/views/quotation/eighth/eighth'),
+        hidden: true
+    },
+    {
+        path: '/quotation/eighth2',
+        component: () =>
+                import ('@/views/quotation/eighth/eighth2'),
+        hidden: true
+    },
+    {
+        path: '/quotation/seventh2',
+        component: () =>
+                import ('@/views/quotation/seventh/seventh2'),
+        hidden: true
+    },
+    {
+        path: '/quotation/agreeTerms',
+        component: () =>
+                import ('@/views/quotation/agreeTerms/agreeTerms'),
+        hidden: true
+    },
+    {
+        path: '/artificial/personInfo',
+        component: () =>
+                import ('@/views/quotation/artificial/personInfo'),
+        hidden: true
+    },
+    {
+        path: '/artificial/receipt',
+        component: () =>
+                import ('@/views/quotation/artificial/receipt'),
+        hidden: true
+    },
+    {
+        path: '/eshop/pushEshop',
+        component: () =>
+                import ('@/views/eshop/pushEshop'),
+        hidden: true
+    },
+    {
+        path: '/quotation/areaSelect',
+        component: () =>
+                import ('@/views/quotation/components/areaSelect'),
+        hidden: true
+    },
 ]
+
+
+
+
+
 
 // 动态路由，基于用户权限动态去加载
 export const dynamicRoutes = [{
@@ -165,7 +293,8 @@ Router.prototype.push = function push(location) {
 }
 
 export default new Router({
-    mode: 'history', // 去掉url中的#
+    // mode: 'history', // 去掉url中的#
+    mode: 'hash',
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
 })

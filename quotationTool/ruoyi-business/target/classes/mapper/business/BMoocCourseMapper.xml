@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.BMoocCourseMapper">
+    
+    <resultMap type="BMoocCourse" id="BMoocCourseResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="signCondition"    column="sign_condition"    />
+        <result property="imageUrl"    column="image_url"    />
+        <result property="chargeStandard"    column="charge_standard"    />
+        <result property="teacherName"    column="teacher_name"    />
+        <result property="teacherImage"    column="teacher_image"    />
+        <result property="teacherIntroduce"    column="teacher_introduce"    />
+        <result property="classSchedule"    column="class_schedule"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="period"    column="period"    />
+        <result property="classroom"    column="classroom"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="classStatus"    column="class_status"    />
+        <result property="note"    column="note"    />
+        <result property="place"    column="place"    />
+        <result property="liveUrl"    column="live_url"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBMoocCourseVo">
+        select id, title, content, sign_condition, image_url, charge_standard, teacher_name, teacher_image, teacher_introduce, class_schedule, sign_time, period, classroom, telephone, class_status, note, place, live_url, del_flag, create_by, create_time, update_by, update_time, remark from b_mooc_course
+    </sql>
+
+    <select id="selectBMoocCourseList" parameterType="BMoocCourse" resultMap="BMoocCourseResult">
+        <include refid="selectBMoocCourseVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="signCondition != null  and signCondition != ''"> and sign_condition = #{signCondition}</if>
+            <if test="imageUrl != null  and imageUrl != ''"> and image_url = #{imageUrl}</if>
+            <if test="chargeStandard != null "> and charge_standard = #{chargeStandard}</if>
+            <if test="teacherName != null  and teacherName != ''"> and teacher_name like concat('%', #{teacherName}, '%')</if>
+            <if test="teacherImage != null  and teacherImage != ''"> and teacher_image = #{teacherImage}</if>
+            <if test="teacherIntroduce != null  and teacherIntroduce != ''"> and teacher_introduce = #{teacherIntroduce}</if>
+            <if test="classSchedule != null  and classSchedule != ''"> and class_schedule = #{classSchedule}</if>
+            <if test="signTime != null  and signTime != ''"> and sign_time = #{signTime}</if>
+            <if test="period != null  and period != ''"> and period = #{period}</if>
+            <if test="classroom != null  and classroom != ''"> and classroom = #{classroom}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="classStatus != null "> and class_status = #{classStatus}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+            <if test="place != null  and place != ''"> and place = #{place}</if>
+            <if test="liveUrl != null  and liveUrl != ''"> and live_url = #{liveUrl}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBMoocCourseById" parameterType="Long" resultMap="BMoocCourseResult">
+        <include refid="selectBMoocCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBMoocCourse" parameterType="BMoocCourse">
+        insert into b_mooc_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="signCondition != null and signCondition != ''">sign_condition,</if>
+            <if test="imageUrl != null and imageUrl != ''">image_url,</if>
+            <if test="chargeStandard != null">charge_standard,</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name,</if>
+            <if test="teacherImage != null and teacherImage != ''">teacher_image,</if>
+            <if test="teacherIntroduce != null and teacherIntroduce != ''">teacher_introduce,</if>
+            <if test="classSchedule != null and classSchedule != ''">class_schedule,</if>
+            <if test="signTime != null and signTime != ''">sign_time,</if>
+            <if test="period != null and period != ''">period,</if>
+            <if test="classroom != null and classroom != ''">classroom,</if>
+            <if test="telephone != null and telephone != ''">telephone,</if>
+            <if test="classStatus != null">class_status,</if>
+            <if test="note != null and note != ''">note,</if>
+            <if test="place != null and place != ''">place,</if>
+            <if test="liveUrl != null and liveUrl != ''">live_url,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="signCondition != null and signCondition != ''">#{signCondition},</if>
+            <if test="imageUrl != null and imageUrl != ''">#{imageUrl},</if>
+            <if test="chargeStandard != null">#{chargeStandard},</if>
+            <if test="teacherName != null and teacherName != ''">#{teacherName},</if>
+            <if test="teacherImage != null and teacherImage != ''">#{teacherImage},</if>
+            <if test="teacherIntroduce != null and teacherIntroduce != ''">#{teacherIntroduce},</if>
+            <if test="classSchedule != null and classSchedule != ''">#{classSchedule},</if>
+            <if test="signTime != null and signTime != ''">#{signTime},</if>
+            <if test="period != null and period != ''">#{period},</if>
+            <if test="classroom != null and classroom != ''">#{classroom},</if>
+            <if test="telephone != null and telephone != ''">#{telephone},</if>
+            <if test="classStatus != null">#{classStatus},</if>
+            <if test="note != null and note != ''">#{note},</if>
+            <if test="place != null and place != ''">#{place},</if>
+            <if test="liveUrl != null and liveUrl != ''">#{liveUrl},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBMoocCourse" parameterType="BMoocCourse">
+        update b_mooc_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="signCondition != null and signCondition != ''">sign_condition = #{signCondition},</if>
+            <if test="imageUrl != null and imageUrl != ''">image_url = #{imageUrl},</if>
+            <if test="chargeStandard != null">charge_standard = #{chargeStandard},</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name = #{teacherName},</if>
+            <if test="teacherImage != null and teacherImage != ''">teacher_image = #{teacherImage},</if>
+            <if test="teacherIntroduce != null and teacherIntroduce != ''">teacher_introduce = #{teacherIntroduce},</if>
+            <if test="classSchedule != null and classSchedule != ''">class_schedule = #{classSchedule},</if>
+            <if test="signTime != null and signTime != ''">sign_time = #{signTime},</if>
+            <if test="period != null and period != ''">period = #{period},</if>
+            <if test="classroom != null and classroom != ''">classroom = #{classroom},</if>
+            <if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
+            <if test="classStatus != null">class_status = #{classStatus},</if>
+            <if test="note != null and note != ''">note = #{note},</if>
+            <if test="place != null and place != ''">place = #{place},</if>
+            <if test="liveUrl != null and liveUrl != ''">live_url = #{liveUrl},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBMoocCourseById" parameterType="Long">
+        delete from b_mooc_course where id = #{id}
+    </delete>
+
+    <delete id="deleteBMoocCourseByIds" parameterType="String">
+        delete from b_mooc_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

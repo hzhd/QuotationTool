@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.ApiLogMapper">
+
+	<resultMap type="ApiLog" id="ApiLogResult">
+		<id     property="logId"          column="log_id"           />
+		<result property="sessionId"      column="session_id"         />
+		<result property="logName"        column="log_name"            />
+		<result property="logType"        column="log_type"            />
+		<result property="url"            column="url"    />
+		<result property="code"           column="code"           />
+		<result property="msg"            column="msg"                />
+		<result property="status"         column="status"               />
+		<result property="notifiTime"     column="notifi_time"        />
+		<result property="requestData"    column="request_data"               />
+		<result property="responseData"   column="response_data"        />
+	</resultMap>
+
+	<insert id="insertApiLog" parameterType="ApiLog">
+		insert into b_api_log (session_id, log_name, log_type, url, code, msg, status, notifi_time, request_data, response_data, tenant_id)
+		values (#{sessionId}, #{logName}, #{logType}, #{url}, #{code}, #{msg}, #{status}, sysdate(), #{requestData}, #{responseData}, #{tenantId})
+	</insert>
+	
+	<select id="selectApiLogList" parameterType="ApiLog" resultMap="ApiLogResult">
+		select log_id, session_id, log_name, log_type, url, code, msg, status, notifi_time, request_data, response_data from b_api_log
+		<where>
+			<if test="logName != null and logName != ''">
+				AND log_name like concat('%', #{logName}, '%')
+			</if>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="sessionId != null and sessionId != ''">
+				AND session_id like concat('%', #{sessionId}, '%')
+			</if>
+			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(notifi_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(notifi_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+			<if test="tenantId != null and tenantId != ''">
+				AND tenant_id = #{tenantId}
+			</if>
+		</where>
+		order by log_id desc
+	</select>
+
+	<select id="selectApiLogList2" parameterType="ApiLog" resultMap="ApiLogResult">
+		select log_id, session_id, log_name, log_type, url, code, msg, status, notifi_time, request_data, response_data from b_api_log
+		where tenant_id = #{tenantId}
+		order by notifi_time desc limit 3
+	</select>
+	
+	<delete id="deleteApiLogByIds" parameterType="Long">
+ 		delete from b_api_log where log_id in
+ 		<foreach collection="array" item="infoId" open="(" separator="," close=")">
+ 			#{infoId}
+        </foreach> 
+ 	</delete>
+    
+    <update id="cleanApiLog">
+        truncate table sys_logininfor
+    </update>
+    
+</mapper> 

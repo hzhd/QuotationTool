@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.team.mapper.TeamMapper">
+    
+    <resultMap type="com.ruoyi.business.team.controller.TeamVO" id="TeamResult">
+        <result property="id"    column="id"    />
+        <result property="teamName"    column="team_name"    />
+        <result property="teamType"    column="team_type"    />
+        <result property="teamIntro"    column="team_intro"    />
+        <result property="teamPic"    column="team_pic"    />
+        <result property="teamVideo"    column="team_video"    />
+        <result property="teamMine"    column="team_mine"    />
+        <result property="memberNum"    column="member_num"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updatorId"    column="updator_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delTag"    column="del_tag"    />
+        <result property="recVersion"    column="rec_version"    />
+    </resultMap>
+
+    <sql id="selectTeamVo">
+        select id, team_name, team_type, team_intro, team_pic, team_video, team_mine, member_num, creator_id, create_by, create_time, updator_id, update_by, update_time, del_tag, rec_version from t_team
+    </sql>
+
+    <select id="selectTeamList" parameterType="Team" resultMap="TeamResult">
+        <include refid="selectTeamVo"/>
+        <where>  
+            <if test="teamName != null  and teamName != ''"> and team_name like concat('%', #{teamName}, '%')</if>
+            <if test="teamType != null  and teamType != ''"> and INSTR(team_type,#{teamType})>0</if>
+            <if test="teamIntro != null  and teamIntro != ''"> and team_intro = #{teamIntro}</if>
+            <if test="teamPic != null  and teamPic != ''"> and team_pic = #{teamPic}</if>
+            <if test="teamVideo != null  and teamVideo != ''"> and team_video = #{teamVideo}</if>
+            <if test="teamMine != null  and teamMine != ''"> and team_mine = #{teamMine}</if>
+            <if test="minMemberNum != null "> and member_num >= #{minMemberNum}</if>
+            <if test="maxMemberNum != null "> and member_num <![CDATA[<=]]> #{maxMemberNum}</if>
+            <if test="creatorId != null "> and creator_id = #{creatorId}</if>
+            <if test="updatorId != null "> and updator_id = #{updatorId}</if>
+            <if test="delTag != null "> and del_tag = #{delTag}</if>
+            <if test="recVersion != null "> and rec_version = #{recVersion}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeamById" parameterType="Long" resultMap="TeamResult">
+        <include refid="selectTeamVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTeam" parameterType="Team" useGeneratedKeys="true" keyProperty="id">
+        insert into t_team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="teamName != null">team_name,</if>
+            <if test="teamType != null">team_type,</if>
+            <if test="teamIntro != null">team_intro,</if>
+            <if test="teamPic != null">team_pic,</if>
+            <if test="teamVideo != null">team_video,</if>
+            <if test="teamMine != null">team_mine,</if>
+            <if test="memberNum != null">member_num,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updatorId != null">updator_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delTag != null">del_tag,</if>
+            <if test="recVersion != null">rec_version,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="teamName != null">#{teamName},</if>
+            <if test="teamType != null">#{teamType},</if>
+            <if test="teamIntro != null">#{teamIntro},</if>
+            <if test="teamPic != null">#{teamPic},</if>
+            <if test="teamVideo != null">#{teamVideo},</if>
+            <if test="teamMine != null">#{teamMine},</if>
+            <if test="memberNum != null">#{memberNum},</if>
+            <if test="creatorId != null">#{creatorId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updatorId != null">#{updatorId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delTag != null">#{delTag},</if>
+            <if test="recVersion != null">#{recVersion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeam" parameterType="Team">
+        update t_team
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teamName != null">team_name = #{teamName},</if>
+            <if test="teamType != null">team_type = #{teamType},</if>
+            <if test="teamIntro != null">team_intro = #{teamIntro},</if>
+            <if test="teamPic != null">team_pic = #{teamPic},</if>
+            <if test="teamVideo != null">team_video = #{teamVideo},</if>
+            <if test="teamMine != null">team_mine = #{teamMine},</if>
+            <if test="memberNum != null">member_num = #{memberNum},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updatorId != null">updator_id = #{updatorId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delTag != null">del_tag = #{delTag},</if>
+            <if test="recVersion != null">rec_version = #{recVersion},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTeamById" parameterType="Long">
+        delete from t_team where id = #{id}
+    </delete>
+
+    <delete id="deleteTeamByIds" parameterType="String">
+        delete from t_team where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

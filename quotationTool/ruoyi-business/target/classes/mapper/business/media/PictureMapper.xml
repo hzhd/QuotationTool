@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.media.mapper.PictureMapper">
+
+    <resultMap type="Picture" id="PictureResult">
+        <result property="id"    column="id"    />
+        <result property="picName"    column="pic_name"    />
+        <result property="picType"    column="pic_type"    />
+        <result property="stadiumId"    column="stadium_id"    />
+        <result property="picTag"    column="pic_tag"    />
+        <result property="picIntro"    column="pic_intro"    />
+        <result property="picPath"    column="pic_path"    />
+        <result property="picTip"    column="pic_tip"    />
+        <result property="picStatus"    column="pic_status"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updatorId"    column="updator_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delTag"    column="del_tag"    />
+        <result property="recVersion"    column="rec_version"    />
+    </resultMap>
+
+    <sql id="selectPictureVo">
+        select id, pic_name, pic_type, stadium_id, pic_tag, pic_intro, pic_path, pic_tip, pic_status, creator_id, create_by, create_time, updator_id, update_by, update_time, del_tag, rec_version from t_picture
+    </sql>
+
+    <select id="selectPictureList" parameterType="Picture" resultMap="PictureResult">
+        <include refid="selectPictureVo"/>
+        <where>
+            <if test="picName != null  and picName != ''"> and pic_name like concat('%', #{picName}, '%')</if>
+            <if test="picType != null  and picType != ''"> and pic_type = #{picType}</if>
+            <if test="stadiumId != null "> and stadium_id = #{stadiumId}</if>
+            <if test="picTag != null  and picTag != ''"> and pic_tag = #{picTag}</if>
+            <if test="picIntro != null  and picIntro != ''"> and pic_intro = #{picIntro}</if>
+            <if test="picPath != null  and picPath != ''"> and pic_path = #{picPath}</if>
+            <if test="picTip != null  and picTip != ''"> and pic_tip = #{picTip}</if>
+            <if test="picStatus != null "> and pic_status = #{picStatus}</if>
+            <if test="creatorId != null "> and creator_id = #{creatorId}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="updatorId != null "> and updator_id = #{updatorId}</if>
+            <if test="delTag != null "> and del_tag = #{delTag}</if>
+            <if test="recVersion != null "> and rec_version = #{recVersion}</if>
+        </where>
+    </select>
+
+    <select id="selectPictureById" parameterType="Long" resultMap="PictureResult">
+        <include refid="selectPictureVo"/>
+        where id = #{id}
+    </select>
+    <select id="queryStadiumList" resultType="java.util.Map">
+        select id,stadium_name from t_stadium
+    </select>
+
+    <insert id="insertPicture" parameterType="Picture" useGeneratedKeys="true" keyProperty="id">
+        insert into t_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="picName != null and picName != ''">pic_name,</if>
+            <if test="picType != null and picType != ''">pic_type,</if>
+            <if test="stadiumId != null">stadium_id,</if>
+            <if test="picTag != null">pic_tag,</if>
+            <if test="picIntro != null">pic_intro,</if>
+            <if test="picPath != null and picPath != ''">pic_path,</if>
+            <if test="picTip != null">pic_tip,</if>
+            <if test="picStatus != null">pic_status,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updatorId != null">updator_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delTag != null">del_tag,</if>
+            <if test="recVersion != null">rec_version,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="picName != null and picName != ''">#{picName},</if>
+            <if test="picType != null and picType != ''">#{picType},</if>
+            <if test="stadiumId != null">#{stadiumId},</if>
+            <if test="picTag != null">#{picTag},</if>
+            <if test="picIntro != null">#{picIntro},</if>
+            <if test="picPath != null and picPath != ''">#{picPath},</if>
+            <if test="picTip != null">#{picTip},</if>
+            <if test="picStatus != null">#{picStatus},</if>
+            <if test="creatorId != null">#{creatorId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updatorId != null">#{updatorId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delTag != null">#{delTag},</if>
+            <if test="recVersion != null">#{recVersion},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePicture" parameterType="Picture">
+        update t_picture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="picName != null and picName != ''">pic_name = #{picName},</if>
+            <if test="picType != null and picType != ''">pic_type = #{picType},</if>
+            <if test="stadiumId != null">stadium_id = #{stadiumId},</if>
+            <if test="picTag != null">pic_tag = #{picTag},</if>
+            <if test="picIntro != null">pic_intro = #{picIntro},</if>
+            <if test="picPath != null and picPath != ''">pic_path = #{picPath},</if>
+            <if test="picTip != null">pic_tip = #{picTip},</if>
+            <if test="picStatus != null">pic_status = #{picStatus},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updatorId != null">updator_id = #{updatorId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delTag != null">del_tag = #{delTag},</if>
+            <if test="recVersion != null">rec_version = #{recVersion},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePictureById" parameterType="Long">
+        delete from t_picture where id = #{id}
+    </delete>
+
+    <delete id="deletePictureByIds" parameterType="String">
+        delete from t_picture where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.ZSensitivWordMapper">
+    
+    <resultMap type="ZSensitivWord" id="ZSensitivWordResult">
+        <result property="sensitiveId"    column="sensitive_id"    />
+        <result property="content"    column="content"    />
+        <result property="count"    column="count"    />
+        <result property="warningLevel"    column="warning_level"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectZSensitivWordVo">
+        select sensitive_id, content, count, warning_level, status, del_flag, create_by, create_time, update_by, update_time, remark from z_sensitiv_word
+    </sql>
+
+    <select id="selectZSensitivWordList" parameterType="ZSensitivWord" resultMap="ZSensitivWordResult">
+        <include refid="selectZSensitivWordVo"/>
+        <where>  
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="count != null "> and count = #{count}</if>
+            <if test="warningLevel != null "> and warning_level = #{warningLevel}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectZSensitivWordBySensitiveId" parameterType="Long" resultMap="ZSensitivWordResult">
+        <include refid="selectZSensitivWordVo"/>
+        where sensitive_id = #{sensitiveId}
+    </select>
+        
+    <insert id="insertZSensitivWord" parameterType="ZSensitivWord" useGeneratedKeys="true" keyProperty="sensitiveId">
+        insert into z_sensitiv_word
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">content,</if>
+            <if test="count != null">count,</if>
+            <if test="warningLevel != null">warning_level,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">#{content},</if>
+            <if test="count != null">#{count},</if>
+            <if test="warningLevel != null">#{warningLevel},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZSensitivWord" parameterType="ZSensitivWord">
+        update z_sensitiv_word
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="content != null">content = #{content},</if>
+            <if test="count != null">count = #{count},</if>
+            <if test="warningLevel != null">warning_level = #{warningLevel},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where sensitive_id = #{sensitiveId}
+    </update>
+
+    <delete id="deleteZSensitivWordBySensitiveId" parameterType="Long">
+        delete from z_sensitiv_word where sensitive_id = #{sensitiveId}
+    </delete>
+
+    <delete id="deleteZSensitivWordBySensitiveIds" parameterType="String">
+        delete from z_sensitiv_word where sensitive_id in 
+        <foreach item="sensitiveId" collection="array" open="(" separator="," close=")">
+            #{sensitiveId}
+        </foreach>
+    </delete>
+</mapper>

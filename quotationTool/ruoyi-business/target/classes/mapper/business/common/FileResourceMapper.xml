@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.common.mapper.FileResourceMapper">
+    
+    <resultMap type="FileResource" id="FileResourceResult">
+        <result property="id"    column="id"    />
+        <result property="bizType"    column="biz_type"    />
+        <result property="bizId"    column="biz_id"    />
+        <result property="contentType"    column="content_type"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updatorId"    column="updator_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delTag"    column="del_tag"    />
+        <result property="recVersion"    column="rec_version"    />
+    </resultMap>
+
+    <sql id="selectFileResourceVo">
+        select id, biz_type, biz_id, content_type, file_path, creator_id, create_by, create_time, updator_id, update_by, update_time, del_tag, rec_version from t_file_resource
+    </sql>
+
+    <select id="selectFileResourceList" parameterType="FileResource" resultMap="FileResourceResult">
+        <include refid="selectFileResourceVo"/>
+        <where>  
+            <if test="bizType != null  and bizType != ''"> and biz_type = #{bizType}</if>
+            <if test="bizId != null "> and biz_id = #{bizId}</if>
+            <if test="contentType != null "> and content_type = #{contentType}</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="creatorId != null "> and creator_id = #{creatorId}</if>
+            <if test="updatorId != null "> and updator_id = #{updatorId}</if>
+            <if test="delTag != null "> and del_tag = #{delTag}</if>
+            <if test="recVersion != null "> and rec_version = #{recVersion}</if>
+        </where>
+    </select>
+    
+    <select id="selectFileResourceById" parameterType="Integer" resultMap="FileResourceResult">
+        <include refid="selectFileResourceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFileResource" parameterType="FileResource">
+        insert into t_file_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="bizType != null">biz_type,</if>
+            <if test="bizId != null">biz_id,</if>
+            <if test="contentType != null">content_type,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updatorId != null">updator_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delTag != null">del_tag,</if>
+            <if test="recVersion != null">rec_version,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="bizType != null">#{bizType},</if>
+            <if test="bizId != null">#{bizId},</if>
+            <if test="contentType != null">#{contentType},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="creatorId != null">#{creatorId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updatorId != null">#{updatorId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delTag != null">#{delTag},</if>
+            <if test="recVersion != null">#{recVersion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFileResource" parameterType="FileResource">
+        update t_file_resource
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bizType != null">biz_type = #{bizType},</if>
+            <if test="bizId != null">biz_id = #{bizId},</if>
+            <if test="contentType != null">content_type = #{contentType},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updatorId != null">updator_id = #{updatorId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delTag != null">del_tag = #{delTag},</if>
+            <if test="recVersion != null">rec_version = #{recVersion},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFileResourceById" parameterType="Integer">
+        delete from t_file_resource where id = #{id}
+    </delete>
+
+    <delete id="deleteFileResourceByIds" parameterType="String">
+        delete from t_file_resource where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

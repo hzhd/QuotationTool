@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.ZAudioMapper">
+    
+    <resultMap type="ZAudio" id="ZAudioResult">
+        <result property="audioId"    column="audio_id"    />
+        <result property="audioName"    column="audio_name"    />
+        <result property="audioIntroduce"    column="audio_introduce"    />
+        <result property="voiceContent"    column="voice_content"    />
+        <result property="movieContent"    column="movie_content"    />
+        <result property="reminder"    column="reminder"    />
+        <result property="issueState"    column="issue_state"    />
+        <result property="stadiumId"    column="stadium_id"    />
+        <result property="resource"    column="resource"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectZAudioVo">
+        select audio_id, audio_name, audio_introduce, voice_content, movie_content, reminder, issue_state, stadium_id, resource, status, del_flag, create_by, create_time, update_by, update_time, remark from z_audio
+    </sql>
+
+    <select id="selectZAudioList" parameterType="ZAudio" resultMap="ZAudioResult">
+        <include refid="selectZAudioVo"/>
+        <where>  
+            <if test="audioName != null  and audioName != ''"> and audio_name like concat('%', #{audioName}, '%')</if>
+            <if test="audioIntroduce != null  and audioIntroduce != ''"> and audio_introduce = #{audioIntroduce}</if>
+            <if test="voiceContent != null  and voiceContent != ''"> and voice_content = #{voiceContent}</if>
+            <if test="movieContent != null  and movieContent != ''"> and movie_content = #{movieContent}</if>
+            <if test="reminder != null  and reminder != ''"> and reminder = #{reminder}</if>
+            <if test="issueState != null  and issueState != ''"> and issue_state = #{issueState}</if>
+            <if test="stadiumId != null  and stadiumId != ''"> and stadium_id = #{stadiumId}</if>
+            <if test="resource != null  and resource != ''"> and resource = #{resource}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectZAudioByAudioId" parameterType="Long" resultMap="ZAudioResult">
+        <include refid="selectZAudioVo"/>
+        where audio_id = #{audioId}
+    </select>
+        
+    <insert id="insertZAudio" parameterType="ZAudio" useGeneratedKeys="true" keyProperty="audioId">
+        insert into z_audio
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="audioName != null">audio_name,</if>
+            <if test="audioIntroduce != null">audio_introduce,</if>
+            <if test="voiceContent != null">voice_content,</if>
+            <if test="movieContent != null">movie_content,</if>
+            <if test="reminder != null">reminder,</if>
+            <if test="issueState != null">issue_state,</if>
+            <if test="stadiumId != null">stadium_id,</if>
+            <if test="resource != null">resource,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="audioName != null">#{audioName},</if>
+            <if test="audioIntroduce != null">#{audioIntroduce},</if>
+            <if test="voiceContent != null">#{voiceContent},</if>
+            <if test="movieContent != null">#{movieContent},</if>
+            <if test="reminder != null">#{reminder},</if>
+            <if test="issueState != null">#{issueState},</if>
+            <if test="stadiumId != null">#{stadiumId},</if>
+            <if test="resource != null">#{resource},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZAudio" parameterType="ZAudio">
+        update z_audio
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="audioName != null">audio_name = #{audioName},</if>
+            <if test="audioIntroduce != null">audio_introduce = #{audioIntroduce},</if>
+            <if test="voiceContent != null">voice_content = #{voiceContent},</if>
+            <if test="movieContent != null">movie_content = #{movieContent},</if>
+            <if test="reminder != null">reminder = #{reminder},</if>
+            <if test="issueState != null">issue_state = #{issueState},</if>
+            <if test="stadiumId != null">stadium_id = #{stadiumId},</if>
+            <if test="resource != null">resource = #{resource},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where audio_id = #{audioId}
+    </update>
+
+    <delete id="deleteZAudioByAudioId" parameterType="Long">
+        delete from z_audio where audio_id = #{audioId}
+    </delete>
+
+    <delete id="deleteZAudioByAudioIds" parameterType="String">
+        delete from z_audio where audio_id in 
+        <foreach item="audioId" collection="array" open="(" separator="," close=")">
+            #{audioId}
+        </foreach>
+    </delete>
+</mapper>

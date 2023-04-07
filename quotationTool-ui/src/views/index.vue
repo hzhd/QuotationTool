@@ -1,12 +1,15 @@
 <template>
-  <div class="app-container home">
-    <div
+  <!-- <div class="app-container home"> -->
+    <!-- <div
       :style="{
         width: `calc(100vw - ${widths}px - 40px)`,
         height: `calc(100vh - ${heights}px - 20px - 8.3vh)`,
       }"
-    >
-      <div class="home_top">
+    > -->
+    <div style="height: auto;width: 100%;">
+      <img :src="require('@/assets/images/huanying.jpg')" style="width:100%;">
+    </div>
+      <!-- <div class="home_top">
         <div class="top_left">
           <div class="top_left_title">
             <div>当月预约人数统计</div>
@@ -235,9 +238,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="home_bottom">
+      <!-- <div class="home_bottom">
         <div class="bottom_left">
           <div class="bottom_left_title">
             <div style="display: flex; align-items: center">
@@ -294,9 +297,9 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -384,246 +387,246 @@ export default {
   },
   mounted() {
     
-    var that = this;
+    // var that = this;
     // this.heights =
     //   document.getElementsByClassName("navbar")[0].offsetHeight +
     //   document.getElementsByClassName("tags-view-container")[0].offsetHeight;
 
-    this.widths =
-      document.getElementsByClassName("sidebar-container")[0].offsetWidth;
-    this.drawPie();
-    this.topEcharts("zhexian1");
-    this.topEcharts("zhexian2");
-    for (let i = 0; i < this.li_data.length; i++) {
-      this.topEchartss(`bottom_zhexian${i}`, this.li_data[i]);
-    }
-    // 产品影响力
-    infoNames().then((res) => {
-      that.effectList = res;
-    });
-    // 下拉框数据， 渲染柱状图
-    subscribeNames().then((res) => {
-      for (let a = 0; a < res.length; a++) {
-        var obj = {
-          value: res[a],
-          label: res[a],
-        };
-        that.options.push(obj);
-      }
-    });
-    // 活动预告
-    activityNums().then((res) => {
-      that.bottomData = res
-    });
-    setTimeout(function () {
-      that.value = that.options[0].value;
-    }, 300);
+    // this.widths =
+    //   document.getElementsByClassName("sidebar-container")[0].offsetWidth;
+    // this.drawPie();
+    // this.topEcharts("zhexian1");
+    // this.topEcharts("zhexian2");
+    // for (let i = 0; i < this.li_data.length; i++) {
+    //   this.topEchartss(`bottom_zhexian${i}`, this.li_data[i]);
+    // }
+    // // 产品影响力
+    // infoNames().then((res) => {
+    //   that.effectList = res;
+    // });
+    // // 下拉框数据， 渲染柱状图
+    // subscribeNames().then((res) => {
+    //   for (let a = 0; a < res.length; a++) {
+    //     var obj = {
+    //       value: res[a],
+    //       label: res[a],
+    //     };
+    //     that.options.push(obj);
+    //   }
+    // });
+    // // 活动预告
+    // activityNums().then((res) => {
+    //   that.bottomData = res
+    // });
+    // setTimeout(function () {
+    //   that.value = that.options[0].value;
+    // }, 300);
   },
   methods: {
-    drawPie() {
-      var myChart1 = this.echarts.init(document.getElementById("pie"));
-      var option = {
-        color: ["#EC4E4E", "#2063EF", "#F5AC15"],
-        legend: {},
-        tooltip: {},
-        grid: {
-          width: "80%",
-          top: "20%",
-        },
-        xAxis: {
-          type: "category",
-          name: "(天)",
-          data: [],
-        },
-        yAxis: {
-          name: "(人)",
-          splitLine: {
-            show: false,
-          },
-          // splitNumber: 3,
-        },
-        // barWidth: 15,
-        // barGap: 1,
-        // Declare several bar series, each will be mapped
-        // to a column of dataset.source by default.
-        series: [
-          {
-            data: [],
-            type: "bar",
-          },
-        ],
-      };
+  //   drawPie() {
+  //     var myChart1 = this.echarts.init(document.getElementById("pie"));
+  //     var option = {
+  //       color: ["#EC4E4E", "#2063EF", "#F5AC15"],
+  //       legend: {},
+  //       tooltip: {},
+  //       grid: {
+  //         width: "80%",
+  //         top: "20%",
+  //       },
+  //       xAxis: {
+  //         type: "category",
+  //         name: "(天)",
+  //         data: [],
+  //       },
+  //       yAxis: {
+  //         name: "(人)",
+  //         splitLine: {
+  //           show: false,
+  //         },
+  //         // splitNumber: 3,
+  //       },
+  //       // barWidth: 15,
+  //       // barGap: 1,
+  //       // Declare several bar series, each will be mapped
+  //       // to a column of dataset.source by default.
+  //       series: [
+  //         {
+  //           data: [],
+  //           type: "bar",
+  //         },
+  //       ],
+  //     };
 
-      for (let i = 1; i < 31; i++) {
-        option.xAxis.data.push(`09-${i < 10 ? "0" + i : i}`);
-        option.series[0].data.push(Math.round(Math.random() * 100));
-      }
+  //     for (let i = 1; i < 31; i++) {
+  //       option.xAxis.data.push(`09-${i < 10 ? "0" + i : i}`);
+  //       option.series[0].data.push(Math.round(Math.random() * 100));
+  //     }
 
-      myChart1.setOption(option);
-    },
-    topEcharts(name) {
-      var myChart = this.echarts.init(document.getElementById(name));
-      // var myChart = this.echarts.init(document.getElementById('bottom_zhexian0'));
+  //     myChart1.setOption(option);
+  //   },
+  //   topEcharts(name) {
+  //     var myChart = this.echarts.init(document.getElementById(name));
+  //     // var myChart = this.echarts.init(document.getElementById('bottom_zhexian0'));
 
-      var option;
+  //     var option;
 
-      option = {
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: ["10-20", "10-25", "10-28", "11-03", "11-09", "11-13", "11-18"],
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            color: "rgba(130, 152, 174, 1)",
-          },
-          splitNumber: 3,
-        },
-        grid: {
-          top: "60%",
-        },
-        yAxis: {
-          type: "value",
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          splitNumber: 3,
-        },
-        series: [
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: "line",
-            areaStyle: {
-              color: {
-                type: "linear",
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: "rgba(85, 205, 136, 1)", // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "#fff", // 100% 处的颜色
-                  },
-                ],
-                global: false, // 缺省为 false
-              },
-            },
-            lineStyle: {
-              color: "rgba(85, 205, 136, 1)",
-            },
-            symbolSize: 0,
-          },
-        ],
-      };
+  //     option = {
+  //       xAxis: {
+  //         type: "category",
+  //         boundaryGap: false,
+  //         data: ["10-20", "10-25", "10-28", "11-03", "11-09", "11-13", "11-18"],
+  //         axisLine: {
+  //           show: false,
+  //         },
+  //         axisTick: {
+  //           show: false,
+  //         },
+  //         splitLine: {
+  //           show: false,
+  //         },
+  //         axisLabel: {
+  //           color: "rgba(130, 152, 174, 1)",
+  //         },
+  //         splitNumber: 3,
+  //       },
+  //       grid: {
+  //         top: "60%",
+  //       },
+  //       yAxis: {
+  //         type: "value",
+  //         axisLine: {
+  //           show: false,
+  //         },
+  //         axisTick: {
+  //           show: false,
+  //         },
+  //         splitLine: {
+  //           show: false,
+  //         },
+  //         axisLabel: {
+  //           show: false,
+  //         },
+  //         splitNumber: 3,
+  //       },
+  //       series: [
+  //         {
+  //           data: [820, 932, 901, 934, 1290, 1330, 1320],
+  //           type: "line",
+  //           areaStyle: {
+  //             color: {
+  //               type: "linear",
+  //               x: 0,
+  //               y: 0,
+  //               x2: 0,
+  //               y2: 1,
+  //               colorStops: [
+  //                 {
+  //                   offset: 0,
+  //                   color: "rgba(85, 205, 136, 1)", // 0% 处的颜色
+  //                 },
+  //                 {
+  //                   offset: 1,
+  //                   color: "#fff", // 100% 处的颜色
+  //                 },
+  //               ],
+  //               global: false, // 缺省为 false
+  //             },
+  //           },
+  //           lineStyle: {
+  //             color: "rgba(85, 205, 136, 1)",
+  //           },
+  //           symbolSize: 0,
+  //         },
+  //       ],
+  //     };
 
-      option && myChart.setOption(option);
-    },
-    topEchartss(name, data) {
-      var myChart = this.echarts.init(document.getElementById(name));
-      // var myChart = this.echarts.init(document.getElementById('bottom_zhexian0'));
+  //     option && myChart.setOption(option);
+  //   },
+  //   topEchartss(name, data) {
+  //     var myChart = this.echarts.init(document.getElementById(name));
+  //     // var myChart = this.echarts.init(document.getElementById('bottom_zhexian0'));
 
-      var option;
+  //     var option;
 
-      option = {
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: ["10-20", "10-25", "10-28", "11-03", "11-09", "11-13", "11-18"],
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            color: "rgba(130, 152, 174, 1)",
-          },
-          splitNumber: 3,
-        },
-        yAxis: {
-          type: "value",
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          splitNumber: 3,
-        },
-        grid: {
-          width: "80%",
-          top: "20%",
-          left: "20",
-          bottom: "30%",
-        },
-        series: [
-          {
-            data: data.value,
-            type: "line",
-            areaStyle: {
-              color: {
-                type: "linear",
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: data.color, // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "#fff", // 100% 处的颜色
-                  },
-                ],
-                global: false, // 缺省为 false
-              },
-            },
-            lineStyle: {
-              color: data.color,
-            },
-            symbolSize: 0,
-          },
-        ],
-      };
+  //     option = {
+  //       xAxis: {
+  //         type: "category",
+  //         boundaryGap: false,
+  //         data: ["10-20", "10-25", "10-28", "11-03", "11-09", "11-13", "11-18"],
+  //         axisLine: {
+  //           show: false,
+  //         },
+  //         axisTick: {
+  //           show: false,
+  //         },
+  //         splitLine: {
+  //           show: false,
+  //         },
+  //         axisLabel: {
+  //           color: "rgba(130, 152, 174, 1)",
+  //         },
+  //         splitNumber: 3,
+  //       },
+  //       yAxis: {
+  //         type: "value",
+  //         axisLine: {
+  //           show: false,
+  //         },
+  //         axisTick: {
+  //           show: false,
+  //         },
+  //         splitLine: {
+  //           show: false,
+  //         },
+  //         axisLabel: {
+  //           show: false,
+  //         },
+  //         splitNumber: 3,
+  //       },
+  //       grid: {
+  //         width: "80%",
+  //         top: "20%",
+  //         left: "20",
+  //         bottom: "30%",
+  //       },
+  //       series: [
+  //         {
+  //           data: data.value,
+  //           type: "line",
+  //           areaStyle: {
+  //             color: {
+  //               type: "linear",
+  //               x: 0,
+  //               y: 0,
+  //               x2: 0,
+  //               y2: 1,
+  //               colorStops: [
+  //                 {
+  //                   offset: 0,
+  //                   color: data.color, // 0% 处的颜色
+  //                 },
+  //                 {
+  //                   offset: 1,
+  //                   color: "#fff", // 100% 处的颜色
+  //                 },
+  //               ],
+  //               global: false, // 缺省为 false
+  //             },
+  //           },
+  //           lineStyle: {
+  //             color: data.color,
+  //           },
+  //           symbolSize: 0,
+  //         },
+  //       ],
+  //     };
 
-      option && myChart.setOption(option);
-    },
-    selectValue() {
-      this.drawPie();
-      console.log(this.value);
-    },
+  //     option && myChart.setOption(option);
+  //   },
+  //   selectValue() {
+  //     this.drawPie();
+  //     console.log(this.value);
+  //   },
   },
 };
 </script>

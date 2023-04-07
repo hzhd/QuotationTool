@@ -53,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
             throw new ServiceException("对不起，您的账号：" + username + " 已停用");
         }
 
-        passwordService.validate(user);
+//        passwordService.validate(user);
 
         return createLoginUser(user);
     }

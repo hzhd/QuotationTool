@@ -8,14 +8,19 @@ import { isRelogin } from '@/utils/request'
 
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login', '/auth-redirect', '/bind', '/register']
+const whiteList = ['/login','/ssoLogin', '/auth-redirect', '/bind', '/register', '/quotation/apiDoc', '/quotation',
+                    '/quotation/register', '/quotation/first', '/quotation/second', '/quotation/third',
+                    '/quotation/fourth', '/quotation/fifth', '/quotation/sixth', '/quotation/seventh',
+                    '/quotation/eighth', '/quotation/seventh2','/quotation/agreeTerms','/artificial/personInfo',
+                    '/artificial/receipt','/eshop/pushEshop','/quotation/eighth2','/quotation/areaSelect',
+                  ]
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
     to.meta.title && store.dispatch('settings/setTitle', to.meta.title)
     /* has token*/
-    if (to.path === '/login') {
+    if (to.path === '/ssoLogin') {
       next({ path: '/' })
       NProgress.done()
     } else {
@@ -32,7 +37,7 @@ router.beforeEach((to, from, next) => {
         }).catch(err => {
             store.dispatch('LogOut').then(() => {
               Message.error(err)
-              next({ path: '/' })
+              next({ path: '/index' })
             })
           })
       } else {
@@ -45,7 +50,7 @@ router.beforeEach((to, from, next) => {
       // 在免登录白名单，直接进入
       next()
     } else {
-      next(`/login?redirect=${to.fullPath}`) // 否则全部重定向到登录页
+      next(`/ssoLogin?redirect=${to.fullPath}`) // 否则全部重定向到登录页
       NProgress.done()
     }
   }

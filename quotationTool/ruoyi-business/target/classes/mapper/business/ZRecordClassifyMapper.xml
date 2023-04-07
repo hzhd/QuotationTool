@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.ZRecordClassifyMapper">
+    
+    <resultMap type="ZRecordClassify" id="ZRecordClassifyResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="recordName"    column="record_name"    />
+        <result property="recordCode"    column="record_code"    />
+        <result property="recordType"    column="record_type"    />
+        <result property="recordQr"    column="record_qr"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectZRecordClassifyVo">
+        select record_id, record_name, record_code, record_type, record_qr, status, del_flag, create_by, create_time, update_by, update_time, remark from z_record_classify
+    </sql>
+
+    <select id="selectZRecordClassifyList" parameterType="ZRecordClassify" resultMap="ZRecordClassifyResult">
+        <include refid="selectZRecordClassifyVo"/>
+        <where>  
+            <if test="recordName != null  and recordName != ''"> and record_name like concat('%', #{recordName}, '%')</if>
+            <if test="recordCode != null  and recordCode != ''"> and record_code = #{recordCode}</if>
+            <if test="recordType != null  and recordType != ''"> and record_type = #{recordType}</if>
+            <if test="recordQr != null  and recordQr != ''"> and record_qr = #{recordQr}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectZRecordClassifyByRecordId" parameterType="Long" resultMap="ZRecordClassifyResult">
+        <include refid="selectZRecordClassifyVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertZRecordClassify" parameterType="ZRecordClassify" useGeneratedKeys="true" keyProperty="recordId">
+        insert into z_record_classify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordName != null">record_name,</if>
+            <if test="recordCode != null">record_code,</if>
+            <if test="recordType != null and recordType != ''">record_type,</if>
+            <if test="recordQr != null">record_qr,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordName != null">#{recordName},</if>
+            <if test="recordCode != null">#{recordCode},</if>
+            <if test="recordType != null and recordType != ''">#{recordType},</if>
+            <if test="recordQr != null">#{recordQr},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZRecordClassify" parameterType="ZRecordClassify">
+        update z_record_classify
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordName != null">record_name = #{recordName},</if>
+            <if test="recordCode != null">record_code = #{recordCode},</if>
+            <if test="recordType != null and recordType != ''">record_type = #{recordType},</if>
+            <if test="recordQr != null">record_qr = #{recordQr},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteZRecordClassifyByRecordId" parameterType="Long">
+        delete from z_record_classify where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteZRecordClassifyByRecordIds" parameterType="String">
+        delete from z_record_classify where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

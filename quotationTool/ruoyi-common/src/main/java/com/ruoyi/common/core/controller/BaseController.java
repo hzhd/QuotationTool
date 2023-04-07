@@ -121,6 +121,14 @@ public class BaseController
     }
 
     /**
+     * 返回成功消息
+     */
+    public AjaxResult success(Object message)
+    {
+        return AjaxResult.success(message);
+    }
+
+    /**
      * 返回失败消息
      */
     public AjaxResult error(String message)

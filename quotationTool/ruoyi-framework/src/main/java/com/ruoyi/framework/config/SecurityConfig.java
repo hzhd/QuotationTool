@@ -141,6 +141,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         ,"/media/publish/**"
                         ).permitAll()
                 .antMatchers("/screenSet/**").permitAll()
+                .antMatchers("/eshop/**").permitAll()
+                .antMatchers("/static/**").permitAll()
+                .antMatchers("/system/dict/**").permitAll()
+                .antMatchers("/oauth2/login/**").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 .and()

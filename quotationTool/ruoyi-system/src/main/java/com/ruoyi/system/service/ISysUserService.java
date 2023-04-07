@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
@@ -203,4 +204,5 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
 }

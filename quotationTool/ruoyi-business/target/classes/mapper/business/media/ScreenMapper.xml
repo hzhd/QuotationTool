@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.media.mapper.ScreenMapper">
+    
+    <resultMap type="Screen" id="ScreenResult">
+        <result property="id"    column="id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="stadiumId"    column="stadium_id"    />
+        <result property="deviceSize"    column="device_size"    />
+        <result property="deviceDpi"    column="device_dpi"    />
+        <result property="macAdd"    column="mac_add"    />
+        <result property="deviceIp"    column="device_ip"    />
+        <result property="deviceAdd"    column="device_add"    />
+        <result property="registryTime"    column="registry_time"    />
+        <result property="creatorId"    column="creator_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updatorId"    column="updator_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delTag"    column="del_tag"    />
+        <result property="recVersion"    column="rec_version"    />
+    </resultMap>
+
+    <sql id="selectScreenVo">
+        select id, device_name, stadium_id, device_size, device_dpi, mac_add, device_ip, device_add, registry_time, creator_id, create_by, create_time, updator_id, update_by, update_time, del_tag, rec_version from t_screen
+    </sql>
+
+    <select id="selectScreenList" parameterType="Screen" resultMap="ScreenResult">
+        <include refid="selectScreenVo"/>
+        <where>  
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="stadiumId != null "> and stadium_id = #{stadiumId}</if>
+            <if test="deviceSize != null  and deviceSize != ''"> and device_size = #{deviceSize}</if>
+            <if test="deviceDpi != null  and deviceDpi != ''"> and device_dpi = #{deviceDpi}</if>
+            <if test="macAdd != null  and macAdd != ''"> and mac_add = #{macAdd}</if>
+            <if test="deviceIp != null  and deviceIp != ''"> and device_ip = #{deviceIp}</if>
+            <if test="deviceAdd != null  and deviceAdd != ''"> and device_add = #{deviceAdd}</if>
+            <if test="params.beginRegistryTime != null and params.beginRegistryTime != '' and params.endRegistryTime != null and params.endRegistryTime != ''"> and registry_time between #{params.beginRegistryTime} and #{params.endRegistryTime}</if>
+            <if test="creatorId != null "> and creator_id = #{creatorId}</if>
+            <if test="updatorId != null "> and updator_id = #{updatorId}</if>
+            <if test="delTag != null "> and del_tag = #{delTag}</if>
+            <if test="recVersion != null "> and rec_version = #{recVersion}</if>
+        </where>
+    </select>
+    
+    <select id="selectScreenById" parameterType="Integer" resultMap="ScreenResult">
+        <include refid="selectScreenVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScreen" parameterType="Screen">
+        insert into t_screen
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="deviceName != null">device_name,</if>
+            <if test="stadiumId != null">stadium_id,</if>
+            <if test="deviceSize != null">device_size,</if>
+            <if test="deviceDpi != null">device_dpi,</if>
+            <if test="macAdd != null">mac_add,</if>
+            <if test="deviceIp != null">device_ip,</if>
+            <if test="deviceAdd != null">device_add,</if>
+            <if test="registryTime != null">registry_time,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updatorId != null">updator_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delTag != null">del_tag,</if>
+            <if test="recVersion != null">rec_version,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="stadiumId != null">#{stadiumId},</if>
+            <if test="deviceSize != null">#{deviceSize},</if>
+            <if test="deviceDpi != null">#{deviceDpi},</if>
+            <if test="macAdd != null">#{macAdd},</if>
+            <if test="deviceIp != null">#{deviceIp},</if>
+            <if test="deviceAdd != null">#{deviceAdd},</if>
+            <if test="registryTime != null">#{registryTime},</if>
+            <if test="creatorId != null">#{creatorId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updatorId != null">#{updatorId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delTag != null">#{delTag},</if>
+            <if test="recVersion != null">#{recVersion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateScreen" parameterType="Screen">
+        update t_screen
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="stadiumId != null">stadium_id = #{stadiumId},</if>
+            <if test="deviceSize != null">device_size = #{deviceSize},</if>
+            <if test="deviceDpi != null">device_dpi = #{deviceDpi},</if>
+            <if test="macAdd != null">mac_add = #{macAdd},</if>
+            <if test="deviceIp != null">device_ip = #{deviceIp},</if>
+            <if test="deviceAdd != null">device_add = #{deviceAdd},</if>
+            <if test="registryTime != null">registry_time = #{registryTime},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updatorId != null">updator_id = #{updatorId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delTag != null">del_tag = #{delTag},</if>
+            <if test="recVersion != null">rec_version = #{recVersion},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteScreenById" parameterType="Integer">
+        delete from t_screen where id = #{id}
+    </delete>
+
+    <delete id="deleteScreenByIds" parameterType="String">
+        delete from t_screen where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

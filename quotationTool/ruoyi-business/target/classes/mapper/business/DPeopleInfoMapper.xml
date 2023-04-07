@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.DPeopleInfoMapper">
+    
+    <resultMap type="DPeopleInfo" id="DPeopleInfoResult">
+        <result property="id"    column="id"    />
+        <result property="siteName"    column="site_name"    />
+        <result property="inPeopleDay"    column="in_people_day"    />
+        <result property="outPeopleDay"    column="out_people_day"    />
+        <result property="inPeopleWeek"    column="in_people_week"    />
+        <result property="outPeopleWeek"    column="out_people_week"    />
+        <result property="inPeopleMonth"    column="in_people_month"    />
+        <result property="outPeopleMonth"    column="out_people_month"    />
+        <result property="inPeopleYear"    column="in_people_year"    />
+        <result property="outPeopleYear"    column="out_people_year"    />
+        <result property="delStatus"    column="del_status"    />
+    </resultMap>
+
+    <sql id="selectDPeopleInfoVo">
+        select id, site_name, in_people_day, out_people_day, in_people_week, out_people_week, in_people_month, out_people_month, in_people_year, out_people_year, del_status from d_people_info
+    </sql>
+
+    <select id="selectDPeopleInfoList" parameterType="DPeopleInfo" resultMap="DPeopleInfoResult">
+        <include refid="selectDPeopleInfoVo"/>
+        <where>  
+            <if test="siteName != null  and siteName != ''"> and site_name like concat('%', #{siteName}, '%')</if>
+            <if test="inPeopleDay != null "> and in_people_day = #{inPeopleDay}</if>
+            <if test="outPeopleDay != null "> and out_people_day = #{outPeopleDay}</if>
+            <if test="inPeopleWeek != null "> and in_people_week = #{inPeopleWeek}</if>
+            <if test="outPeopleWeek != null "> and out_people_week = #{outPeopleWeek}</if>
+            <if test="inPeopleMonth != null "> and in_people_month = #{inPeopleMonth}</if>
+            <if test="outPeopleMonth != null "> and out_people_month = #{outPeopleMonth}</if>
+            <if test="inPeopleYear != null "> and in_people_year = #{inPeopleYear}</if>
+            <if test="outPeopleYear != null "> and out_people_year = #{outPeopleYear}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectDPeopleInfoById" parameterType="Long" resultMap="DPeopleInfoResult">
+        <include refid="selectDPeopleInfoVo"/>
+        where id = #{id}
+    </select>
+<!--    查询日周月年 进出人数统计-->
+    <select id="selectDays" resultType="com.ruoyi.business.domain.DPeopleInfo" resultMap="DPeopleInfoResult">
+        SELECT
+            b.site_name,
+            b.in_people_day,
+            b.out_people_day,
+            sum( b.in_people_day + b.out_people_day ) total
+        FROM
+            d_people_info b
+        GROUP BY
+            b.site_name,
+            b.in_people_day,
+            b.out_people_day
+    </select>
+    <select id="selectWeeks" resultType="com.ruoyi.business.domain.DPeopleInfo" resultMap="DPeopleInfoResult">
+        SELECT
+            b.site_name,
+            b.in_people_week,
+            b.out_people_week,
+            sum( b.in_people_week + b.out_people_week ) total
+        FROM
+            d_people_info b
+        GROUP BY
+            b.site_name,
+            b.in_people_week,
+            b.out_people_week
+    </select>
+    <select id="selectMonths" resultType="com.ruoyi.business.domain.DPeopleInfo" resultMap="DPeopleInfoResult">
+        SELECT
+            b.site_name,
+            b.in_people_month,
+            b.out_people_month,
+            sum( b.in_people_month + b.out_people_month ) total
+        FROM
+            d_people_info b
+        GROUP BY
+            b.site_name,
+            b.in_people_month,
+            b.out_people_month
+    </select>
+    <select id="selectYears" resultType="com.ruoyi.business.domain.DPeopleInfo" resultMap="DPeopleInfoResult">
+        SELECT
+            b.site_name,
+            b.in_people_year,
+            b.out_people_year,
+            sum( b.in_people_year + b.out_people_year ) total
+        FROM
+            d_people_info b
+        GROUP BY
+            b.site_name,
+            b.in_people_year,
+            b.out_people_year
+    </select>
+    <insert id="insertDPeopleInfo" parameterType="DPeopleInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into d_people_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="siteName != null">site_name,</if>
+            <if test="inPeopleDay != null">in_people_day,</if>
+            <if test="outPeopleDay != null">out_people_day,</if>
+            <if test="inPeopleWeek != null">in_people_week,</if>
+            <if test="outPeopleWeek != null">out_people_week,</if>
+            <if test="inPeopleMonth != null">in_people_month,</if>
+            <if test="outPeopleMonth != null">out_people_month,</if>
+            <if test="inPeopleYear != null">in_people_year,</if>
+            <if test="outPeopleYear != null">out_people_year,</if>
+            <if test="delStatus != null">del_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="siteName != null">#{siteName},</if>
+            <if test="inPeopleDay != null">#{inPeopleDay},</if>
+            <if test="outPeopleDay != null">#{outPeopleDay},</if>
+            <if test="inPeopleWeek != null">#{inPeopleWeek},</if>
+            <if test="outPeopleWeek != null">#{outPeopleWeek},</if>
+            <if test="inPeopleMonth != null">#{inPeopleMonth},</if>
+            <if test="outPeopleMonth != null">#{outPeopleMonth},</if>
+            <if test="inPeopleYear != null">#{inPeopleYear},</if>
+            <if test="outPeopleYear != null">#{outPeopleYear},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDPeopleInfo" parameterType="DPeopleInfo">
+        update d_people_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="siteName != null">site_name = #{siteName},</if>
+            <if test="inPeopleDay != null">in_people_day = #{inPeopleDay},</if>
+            <if test="outPeopleDay != null">out_people_day = #{outPeopleDay},</if>
+            <if test="inPeopleWeek != null">in_people_week = #{inPeopleWeek},</if>
+            <if test="outPeopleWeek != null">out_people_week = #{outPeopleWeek},</if>
+            <if test="inPeopleMonth != null">in_people_month = #{inPeopleMonth},</if>
+            <if test="outPeopleMonth != null">out_people_month = #{outPeopleMonth},</if>
+            <if test="inPeopleYear != null">in_people_year = #{inPeopleYear},</if>
+            <if test="outPeopleYear != null">out_people_year = #{outPeopleYear},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDPeopleInfoById" parameterType="Long">
+        delete from d_people_info where id = #{id}
+    </delete>
+
+    <delete id="deleteDPeopleInfoByIds" parameterType="String">
+        delete from d_people_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

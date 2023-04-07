@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.quotation.mapper.EshopViewMapper">
+    <select id="getSalesList" resultType="com.ruoyi.quotation.domain.bo.SalesView">
+        select * from sales
+        <where>  
+            1=1
+        </where>
+    </select>
+    <select id="getDistributorList" resultType="com.ruoyi.quotation.domain.bo.DistributorView">
+        select * from distributor
+        <where>
+            1=1
+        </where>
+    </select>
+
+</mapper>

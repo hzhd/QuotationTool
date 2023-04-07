@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.quotation.mapper.EshopMapper">
+    
+    <resultMap type="Eshop" id="EshopResult">
+        <result property="id"    column="id"    />
+        <result property="datasource"    column="dataSource"    />
+        <result property="clueno"    column="clueNo"    />
+        <result property="clueqenerationtime"    column="clueQenerationTime"    />
+        <result property="regioncode"    column="regionCode"    />
+        <result property="regionname"    column="regionName"    />
+        <result property="statuscode"    column="statusCode"    />
+        <result property="statusname"    column="statusName"    />
+        <result property="cluesource"    column="clueSource"    />
+        <result property="product"    column="product"    />
+        <result property="accessorymodel"    column="accessoryModel"    />
+        <result property="lostorderreason"    column="lostOrderReason"    />
+        <result property="lostorderremark"    column="lostOrderRemark"    />
+        <result property="customername"    column="customerName"    />
+        <result property="customerappellation"    column="customerAppellation"    />
+        <result property="customertype"    column="customerType"    />
+        <result property="customerphone"    column="customerPhone"    />
+        <result property="province"    column="province"    />
+        <result property="provincecode"    column="provinceCode"    />
+        <result property="city"    column="city"    />
+        <result property="citycode"    column="cityCode"    />
+        <result property="county"    column="county"    />
+        <result property="countycode"    column="countyCode"    />
+        <result property="address"    column="address"    />
+        <result property="installationtypecode"    column="installationTypeCode"    />
+        <result property="installationtypename"    column="installationTypeName"    />
+        <result property="favoriteheating"    column="favoriteHeating"    />
+        <result property="buildingarea"    column="buildingArea"    />
+        <result property="sprinklerquantity"    column="sprinklerQuantity"    />
+        <result property="boilertype"    column="boilerType"    />
+        <result property="auxiliarymaterialstype"    column="auxiliaryMaterialsType"    />
+        <result property="belongingstore"    column="belongingStore"    />
+        <result property="boilerpower"    column="boilerPower"    />
+        <result property="activationstatus"    column="activationStatus"    />
+        <result property="distributionchannel"    column="distributionChannel"    />
+        <result property="responsibleperson"    column="responsiblePerson"    />
+        <result property="responsiblepersonphone"    column="responsiblePersonPhone"    />
+        <result property="storeaddress"    column="storeAddress"    />
+        <result property="distributorid"    column="distributorId"    />
+        <result property="distributorname"    column="distributorName"    />
+        <result property="problemdescription"    column="problemDescription"    />
+        <result property="casename1"    column="caseName1"    />
+        <result property="casename2"    column="caseName2"    />
+        <result property="productgroup1"    column="productGroup1"    />
+        <result property="productgroup2"    column="productGroup2"    />
+        <result property="product1"    column="product1"    />
+        <result property="product2"    column="product2"    />
+        <result property="price1"    column="price1"    />
+        <result property="price2"    column="price2"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEshopVo">
+        select id, dataSource, clueNo, clueQenerationTime, regionCode, regionName, statusCode, statusName, clueSource, product, accessoryModel, lostOrderReason, lostOrderRemark, customerName, customerAppellation, customerType, customerPhone, province, provinceCode, city, cityCode, county, countyCode, address, installationTypeCode, installationTypeName, favoriteHeating, buildingArea, sprinklerQuantity, boilerType, auxiliaryMaterialsType, belongingStore, boilerPower, activationStatus, distributionChannel, responsiblePerson, responsiblePersonPhone, storeAddress, distributorId, distributorName, problemDescription, caseName1, caseName2, productGroup1, productGroup2, product1, product2, price1, price2, create_by, create_time, update_by, update_time, remark from q_eshop
+    </sql>
+
+    <select id="selectEshopList" parameterType="Eshop" resultMap="EshopResult">
+        <include refid="selectEshopVo"/>
+        <where>  
+            <if test="datasource != null  and datasource != ''"> and dataSource = #{datasource}</if>
+            <if test="clueno != null  and clueno != ''"> and clueNo = #{clueno}</if>
+            <if test="clueqenerationtime != null "> and clueQenerationTime = #{clueqenerationtime}</if>
+            <if test="regioncode != null  and regioncode != ''"> and regionCode = #{regioncode}</if>
+            <if test="regionname != null  and regionname != ''"> and regionName like concat('%', #{regionname}, '%')</if>
+            <if test="statuscode != null  and statuscode != ''"> and statusCode = #{statuscode}</if>
+            <if test="statusname != null  and statusname != ''"> and statusName like concat('%', #{statusname}, '%')</if>
+            <if test="cluesource != null  and cluesource != ''"> and clueSource = #{cluesource}</if>
+            <if test="product != null  and product != ''"> and product = #{product}</if>
+            <if test="accessorymodel != null  and accessorymodel != ''"> and accessoryModel = #{accessorymodel}</if>
+            <if test="lostorderreason != null  and lostorderreason != ''"> and lostOrderReason = #{lostorderreason}</if>
+            <if test="lostorderremark != null  and lostorderremark != ''"> and lostOrderRemark = #{lostorderremark}</if>
+            <if test="customername != null  and customername != ''"> and customerName like concat('%', #{customername}, '%')</if>
+            <if test="customerappellation != null  and customerappellation != ''"> and customerAppellation = #{customerappellation}</if>
+            <if test="customertype != null  and customertype != ''"> and customerType = #{customertype}</if>
+            <if test="customerphone != null  and customerphone != ''"> and customerPhone = #{customerphone}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="provincecode != null  and provincecode != ''"> and provinceCode = #{provincecode}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="citycode != null  and citycode != ''"> and cityCode = #{citycode}</if>
+            <if test="county != null  and county != ''"> and county = #{county}</if>
+            <if test="countycode != null  and countycode != ''"> and countyCode = #{countycode}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="installationtypecode != null  and installationtypecode != ''"> and installationTypeCode = #{installationtypecode}</if>
+            <if test="installationtypename != null  and installationtypename != ''"> and installationTypeName like concat('%', #{installationtypename}, '%')</if>
+            <if test="favoriteheating != null  and favoriteheating != ''"> and favoriteHeating = #{favoriteheating}</if>
+            <if test="buildingarea != null  and buildingarea != ''"> and buildingArea = #{buildingarea}</if>
+            <if test="sprinklerquantity != null "> and sprinklerQuantity = #{sprinklerquantity}</if>
+            <if test="boilertype != null  and boilertype != ''"> and boilerType = #{boilertype}</if>
+            <if test="auxiliarymaterialstype != null  and auxiliarymaterialstype != ''"> and auxiliaryMaterialsType = #{auxiliarymaterialstype}</if>
+            <if test="belongingstore != null  and belongingstore != ''"> and belongingStore = #{belongingstore}</if>
+            <if test="boilerpower != null  and boilerpower != ''"> and boilerPower = #{boilerpower}</if>
+            <if test="activationstatus != null  and activationstatus != ''"> and activationStatus = #{activationstatus}</if>
+            <if test="distributionchannel != null  and distributionchannel != ''"> and distributionChannel = #{distributionchannel}</if>
+            <if test="responsibleperson != null  and responsibleperson != ''"> and responsiblePerson = #{responsibleperson}</if>
+            <if test="responsiblepersonphone != null  and responsiblepersonphone != ''"> and responsiblePersonPhone = #{responsiblepersonphone}</if>
+            <if test="storeaddress != null  and storeaddress != ''"> and storeAddress = #{storeaddress}</if>
+            <if test="distributorid != null  and distributorid != ''"> and distributorId = #{distributorid}</if>
+            <if test="distributorname != null  and distributorname != ''"> and distributorName like concat('%', #{distributorname}, '%')</if>
+            <if test="problemdescription != null  and problemdescription != ''"> and problemDescription = #{problemdescription}</if>
+            <if test="casename1 != null  and casename1 != ''"> and caseName1 = #{casename1}</if>
+            <if test="casename2 != null  and casename2 != ''"> and caseName2 = #{casename2}</if>
+            <if test="productgroup1 != null  and productgroup1 != ''"> and productGroup1 = #{productgroup1}</if>
+            <if test="productgroup2 != null  and productgroup2 != ''"> and productGroup2 = #{productgroup2}</if>
+            <if test="product1 != null  and product1 != ''"> and product1 = #{product1}</if>
+            <if test="product2 != null  and product2 != ''"> and product2 = #{product2}</if>
+            <if test="price1 != null  and price1 != ''"> and price1 = #{price1}</if>
+            <if test="price2 != null  and price2 != ''"> and price2 = #{price2}</if>
+        </where>
+    </select>
+    
+    <select id="selectEshopById" parameterType="Long" resultMap="EshopResult">
+        <include refid="selectEshopVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEshop" parameterType="Eshop" useGeneratedKeys="true" keyProperty="id">
+        insert into q_eshop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="datasource != null">dataSource,</if>
+            <if test="clueno != null">clueNo,</if>
+            <if test="clueqenerationtime != null">clueQenerationTime,</if>
+            <if test="regioncode != null">regionCode,</if>
+            <if test="regionname != null">regionName,</if>
+            <if test="statuscode != null">statusCode,</if>
+            <if test="statusname != null">statusName,</if>
+            <if test="cluesource != null">clueSource,</if>
+            <if test="product != null">product,</if>
+            <if test="accessorymodel != null">accessoryModel,</if>
+            <if test="lostorderreason != null">lostOrderReason,</if>
+            <if test="lostorderremark != null">lostOrderRemark,</if>
+            <if test="customername != null">customerName,</if>
+            <if test="customerappellation != null">customerAppellation,</if>
+            <if test="customertype != null">customerType,</if>
+            <if test="customerphone != null">customerPhone,</if>
+            <if test="province != null">province,</if>
+            <if test="provincecode != null">provinceCode,</if>
+            <if test="city != null">city,</if>
+            <if test="citycode != null">cityCode,</if>
+            <if test="county != null">county,</if>
+            <if test="countycode != null">countyCode,</if>
+            <if test="address != null">address,</if>
+            <if test="installationtypecode != null">installationTypeCode,</if>
+            <if test="installationtypename != null">installationTypeName,</if>
+            <if test="favoriteheating != null">favoriteHeating,</if>
+            <if test="buildingarea != null">buildingArea,</if>
+            <if test="sprinklerquantity != null">sprinklerQuantity,</if>
+            <if test="boilertype != null">boilerType,</if>
+            <if test="auxiliarymaterialstype != null">auxiliaryMaterialsType,</if>
+            <if test="belongingstore != null">belongingStore,</if>
+            <if test="boilerpower != null">boilerPower,</if>
+            <if test="activationstatus != null">activationStatus,</if>
+            <if test="distributionchannel != null">distributionChannel,</if>
+            <if test="responsibleperson != null">responsiblePerson,</if>
+            <if test="responsiblepersonphone != null">responsiblePersonPhone,</if>
+            <if test="storeaddress != null">storeAddress,</if>
+            <if test="distributorid != null">distributorId,</if>
+            <if test="distributorname != null">distributorName,</if>
+            <if test="problemdescription != null">problemDescription,</if>
+            <if test="casename1 != null">caseName1,</if>
+            <if test="casename2 != null">caseName2,</if>
+            <if test="productgroup1 != null">productGroup1,</if>
+            <if test="productgroup2 != null">productGroup2,</if>
+            <if test="product1 != null">product1,</if>
+            <if test="product2 != null">product2,</if>
+            <if test="price1 != null">price1,</if>
+            <if test="price2 != null">price2,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="datasource != null">#{datasource},</if>
+            <if test="clueno != null">#{clueno},</if>
+            <if test="clueqenerationtime != null">#{clueqenerationtime},</if>
+            <if test="regioncode != null">#{regioncode},</if>
+            <if test="regionname != null">#{regionname},</if>
+            <if test="statuscode != null">#{statuscode},</if>
+            <if test="statusname != null">#{statusname},</if>
+            <if test="cluesource != null">#{cluesource},</if>
+            <if test="product != null">#{product},</if>
+            <if test="accessorymodel != null">#{accessorymodel},</if>
+            <if test="lostorderreason != null">#{lostorderreason},</if>
+            <if test="lostorderremark != null">#{lostorderremark},</if>
+            <if test="customername != null">#{customername},</if>
+            <if test="customerappellation != null">#{customerappellation},</if>
+            <if test="customertype != null">#{customertype},</if>
+            <if test="customerphone != null">#{customerphone},</if>
+            <if test="province != null">#{province},</if>
+            <if test="provincecode != null">#{provincecode},</if>
+            <if test="city != null">#{city},</if>
+            <if test="citycode != null">#{citycode},</if>
+            <if test="county != null">#{county},</if>
+            <if test="countycode != null">#{countycode},</if>
+            <if test="address != null">#{address},</if>
+            <if test="installationtypecode != null">#{installationtypecode},</if>
+            <if test="installationtypename != null">#{installationtypename},</if>
+            <if test="favoriteheating != null">#{favoriteheating},</if>
+            <if test="buildingarea != null">#{buildingarea},</if>
+            <if test="sprinklerquantity != null">#{sprinklerquantity},</if>
+            <if test="boilertype != null">#{boilertype},</if>
+            <if test="auxiliarymaterialstype != null">#{auxiliarymaterialstype},</if>
+            <if test="belongingstore != null">#{belongingstore},</if>
+            <if test="boilerpower != null">#{boilerpower},</if>
+            <if test="activationstatus != null">#{activationstatus},</if>
+            <if test="distributionchannel != null">#{distributionchannel},</if>
+            <if test="responsibleperson != null">#{responsibleperson},</if>
+            <if test="responsiblepersonphone != null">#{responsiblepersonphone},</if>
+            <if test="storeaddress != null">#{storeaddress},</if>
+            <if test="distributorid != null">#{distributorid},</if>
+            <if test="distributorname != null">#{distributorname},</if>
+            <if test="problemdescription != null">#{problemdescription},</if>
+            <if test="casename1 != null">#{casename1},</if>
+            <if test="casename2 != null">#{casename2},</if>
+            <if test="productgroup1 != null">#{productgroup1},</if>
+            <if test="productgroup2 != null">#{productgroup2},</if>
+            <if test="product1 != null">#{product1},</if>
+            <if test="product2 != null">#{product2},</if>
+            <if test="price1 != null">#{price1},</if>
+            <if test="price2 != null">#{price2},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEshop" parameterType="Eshop">
+        update q_eshop
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="datasource != null">dataSource = #{datasource},</if>
+            <if test="clueno != null">clueNo = #{clueno},</if>
+            <if test="clueqenerationtime != null">clueQenerationTime = #{clueqenerationtime},</if>
+            <if test="regioncode != null">regionCode = #{regioncode},</if>
+            <if test="regionname != null">regionName = #{regionname},</if>
+            <if test="statuscode != null">statusCode = #{statuscode},</if>
+            <if test="statusname != null">statusName = #{statusname},</if>
+            <if test="cluesource != null">clueSource = #{cluesource},</if>
+            <if test="product != null">product = #{product},</if>
+            <if test="accessorymodel != null">accessoryModel = #{accessorymodel},</if>
+            <if test="lostorderreason != null">lostOrderReason = #{lostorderreason},</if>
+            <if test="lostorderremark != null">lostOrderRemark = #{lostorderremark},</if>
+            <if test="customername != null">customerName = #{customername},</if>
+            <if test="customerappellation != null">customerAppellation = #{customerappellation},</if>
+            <if test="customertype != null">customerType = #{customertype},</if>
+            <if test="customerphone != null">customerPhone = #{customerphone},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="provincecode != null">provinceCode = #{provincecode},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="citycode != null">cityCode = #{citycode},</if>
+            <if test="county != null">county = #{county},</if>
+            <if test="countycode != null">countyCode = #{countycode},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="installationtypecode != null">installationTypeCode = #{installationtypecode},</if>
+            <if test="installationtypename != null">installationTypeName = #{installationtypename},</if>
+            <if test="favoriteheating != null">favoriteHeating = #{favoriteheating},</if>
+            <if test="buildingarea != null">buildingArea = #{buildingarea},</if>
+            <if test="sprinklerquantity != null">sprinklerQuantity = #{sprinklerquantity},</if>
+            <if test="boilertype != null">boilerType = #{boilertype},</if>
+            <if test="auxiliarymaterialstype != null">auxiliaryMaterialsType = #{auxiliarymaterialstype},</if>
+            <if test="belongingstore != null">belongingStore = #{belongingstore},</if>
+            <if test="boilerpower != null">boilerPower = #{boilerpower},</if>
+            <if test="activationstatus != null">activationStatus = #{activationstatus},</if>
+            <if test="distributionchannel != null">distributionChannel = #{distributionchannel},</if>
+            <if test="responsibleperson != null">responsiblePerson = #{responsibleperson},</if>
+            <if test="responsiblepersonphone != null">responsiblePersonPhone = #{responsiblepersonphone},</if>
+            <if test="storeaddress != null">storeAddress = #{storeaddress},</if>
+            <if test="distributorid != null">distributorId = #{distributorid},</if>
+            <if test="distributorname != null">distributorName = #{distributorname},</if>
+            <if test="problemdescription != null">problemDescription = #{problemdescription},</if>
+            <if test="casename1 != null">caseName1 = #{casename1},</if>
+            <if test="casename2 != null">caseName2 = #{casename2},</if>
+            <if test="productgroup1 != null">productGroup1 = #{productgroup1},</if>
+            <if test="productgroup2 != null">productGroup2 = #{productgroup2},</if>
+            <if test="product1 != null">product1 = #{product1},</if>
+            <if test="product2 != null">product2 = #{product2},</if>
+            <if test="price1 != null">price1 = #{price1},</if>
+            <if test="price2 != null">price2 = #{price2},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEshopById" parameterType="Long">
+        delete from q_eshop where id = #{id}
+    </delete>
+
+    <delete id="deleteEshopByIds" parameterType="String">
+        delete from q_eshop where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="checkPhoneUnique" parameterType="String" resultType="int">
+        select count(1) from q_eshop where customerPhone = #{phone} limit 1
+    </select>
+</mapper>

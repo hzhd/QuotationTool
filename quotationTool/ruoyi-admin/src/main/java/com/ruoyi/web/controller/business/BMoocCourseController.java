@@ -49,7 +49,7 @@ public class BMoocCourseController extends BaseController
     /**
      * 导出慕课库数据维护列表
      */
-    @PreAuthorize("@ss.hasPermi('business:course:export')")
+    //@PreAuthorize("@ss.hasPermi('business:course:export')")
     @Log(title = "慕课库数据维护", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, BMoocCourse bMoocCourse)
@@ -62,7 +62,7 @@ public class BMoocCourseController extends BaseController
     /**
      * 获取慕课库数据维护详细信息
      */
-    @PreAuthorize("@ss.hasPermi('business:course:query')")
+    //@PreAuthorize("@ss.hasPermi('business:course:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class BMoocCourseController extends BaseController
     /**
      * 新增慕课库数据维护
      */
-    @PreAuthorize("@ss.hasPermi('business:course:add')")
+    //@PreAuthorize("@ss.hasPermi('business:course:add')")
     @Log(title = "慕课库数据维护", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody BMoocCourse bMoocCourse)
@@ -83,7 +83,7 @@ public class BMoocCourseController extends BaseController
     /**
      * 修改慕课库数据维护
      */
-    @PreAuthorize("@ss.hasPermi('business:course:edit')")
+    //@PreAuthorize("@ss.hasPermi('business:course:edit')")
     @Log(title = "慕课库数据维护", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody BMoocCourse bMoocCourse)
@@ -94,7 +94,7 @@ public class BMoocCourseController extends BaseController
     /**
      * 删除慕课库数据维护
      */
-    @PreAuthorize("@ss.hasPermi('business:course:remove')")
+    //@PreAuthorize("@ss.hasPermi('business:course:remove')")
     @Log(title = "慕课库数据维护", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

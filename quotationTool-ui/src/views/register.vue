@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title">浦东群艺馆后台管理</h3>
+      <h3 class="title">博世热力采暖询价管理平台</h3>
       <el-form-item prop="username">
         <el-input v-model="registerForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />

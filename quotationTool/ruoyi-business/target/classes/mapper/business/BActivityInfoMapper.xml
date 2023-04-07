@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.BActivityInfoMapper">
+
+    <resultMap type="BActivityInfo" id="BActivityInfoResult">
+        <result property="activityId"    column="activity_id"    />
+        <result property="name"    column="name"    />
+        <result property="activityImg"    column="activity_img"    />
+        <result property="activityDetails"    column="activity_details"    />
+        <result property="activityVideo"    column="activity_video"    />
+        <result property="activityAddr"    column="activity_addr"    />
+        <result property="activityContractor"    column="activity_contractor"    />
+        <result property="period"    column="period"    />
+        <result property="hint"    column="hint"    />
+        <result property="maxPeople"    column="max_people"    />
+        <result property="activityType"    column="activity_type"    />
+        <result property="attrSite"    column="attr_site"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="delStatus"    column="del_status"    />
+    </resultMap>
+
+    <sql id="selectBActivityInfoVo">
+        select activity_id, name, activity_img, activity_details, activity_video, activity_addr, activity_contractor, period, hint, max_people, activity_type, attr_site, create_time, del_status from b_activity_info
+    </sql>
+
+    <select id="selectBActivityInfoList" parameterType="BActivityInfo" resultMap="BActivityInfoResult">
+        <include refid="selectBActivityInfoVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="activityImg != null  and activityImg != ''"> and activity_img = #{activityImg}</if>
+            <if test="activityDetails != null  and activityDetails != ''"> and activity_details = #{activityDetails}</if>
+            <if test="activityVideo != null  and activityVideo != ''"> and activity_video = #{activityVideo}</if>
+            <if test="activityAddr != null  and activityAddr != ''"> and activity_addr = #{activityAddr}</if>
+            <if test="activityContractor != null  and activityContractor != ''"> and activity_contractor = #{activityContractor}</if>
+            <if test="period != null  and period != ''"> and period = #{period}</if>
+            <if test="hint != null  and hint != ''"> and hint = #{hint}</if>
+            <if test="maxPeople != null  and maxPeople != ''"> and max_people = #{maxPeople}</if>
+            <if test="activityType != null  and activityType != ''"> and activity_type like concat('%', #{activityType}, '%')</if>
+            <if test="attrSite != null  and attrSite != ''"> and attr_site like concat('%', #{attrSite}, '%')</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="delStatus != null  and delStatus != ''"> and del_status = #{delStatus}</if>
+        </where>
+    </select>
+
+    <select id="selectBActivityInfoByActivityId" parameterType="Long" resultMap="BActivityInfoResult">
+        <include refid="selectBActivityInfoVo"/>
+        where activity_id = #{activityId}
+    </select>
+
+    <insert id="insertBActivityInfo" parameterType="BActivityInfo" useGeneratedKeys="true" keyProperty="activityId">
+        insert into b_activity_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="activityImg != null">activity_img,</if>
+            <if test="activityDetails != null">activity_details,</if>
+            <if test="activityVideo != null">activity_video,</if>
+            <if test="activityAddr != null">activity_addr,</if>
+            <if test="activityContractor != null">activity_contractor,</if>
+            <if test="period != null">period,</if>
+            <if test="hint != null">hint,</if>
+            <if test="maxPeople != null">max_people,</if>
+            <if test="activityType != null">activity_type,</if>
+            <if test="attrSite != null">attr_site,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delStatus != null">del_status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="activityImg != null">#{activityImg},</if>
+            <if test="activityDetails != null">#{activityDetails},</if>
+            <if test="activityVideo != null">#{activityVideo},</if>
+            <if test="activityAddr != null">#{activityAddr},</if>
+            <if test="activityContractor != null">#{activityContractor},</if>
+            <if test="period != null">#{period},</if>
+            <if test="hint != null">#{hint},</if>
+            <if test="maxPeople != null">#{maxPeople},</if>
+            <if test="activityType != null">#{activityType},</if>
+            <if test="attrSite != null">#{attrSite},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delStatus != null">#{delStatus},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBActivityInfo" parameterType="BActivityInfo">
+        update b_activity_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="activityImg != null">activity_img = #{activityImg},</if>
+            <if test="activityDetails != null">activity_details = #{activityDetails},</if>
+            <if test="activityVideo != null">activity_video = #{activityVideo},</if>
+            <if test="activityAddr != null">activity_addr = #{activityAddr},</if>
+            <if test="activityContractor != null">activity_contractor = #{activityContractor},</if>
+            <if test="period != null">period = #{period},</if>
+            <if test="hint != null">hint = #{hint},</if>
+            <if test="maxPeople != null">max_people = #{maxPeople},</if>
+            <if test="activityType != null">activity_type = #{activityType},</if>
+            <if test="attrSite != null">attr_site = #{attrSite},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delStatus != null">del_status = #{delStatus},</if>
+        </trim>
+        where activity_id = #{activityId}
+    </update>
+
+    <delete id="deleteBActivityInfoByActivityId" parameterType="Long">
+        delete from b_activity_info where activity_id = #{activityId}
+    </delete>
+
+    <delete id="deleteBActivityInfoByActivityIds" parameterType="String">
+        delete from b_activity_info where activity_id in
+        <foreach item="activityId" collection="array" open="(" separator="," close=")">
+            #{activityId}
+        </foreach>
+    </delete>
+    <select id="selectNums" resultType="com.ruoyi.business.domain.BActivityInfo" resultMap="BActivityInfoResult">
+        select * from b_activity_info
+    </select>
+    <select id="actType" resultType="java.lang.String">
+        select activity_type from b_activity_info where activity_type !="" group by activity_type
+    </select>
+</mapper>

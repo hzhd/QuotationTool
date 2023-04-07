@@ -7,7 +7,7 @@
       :rules="loginRules"
       class="login-form"
     >
-      <h3 class="title">浦东群艺馆数字化应用平台</h3>
+      <h3 class="title">博世热力采暖询价管理平台</h3>
       <div class="paddings">
         <el-form-item prop="username">
           <el-input
@@ -113,8 +113,8 @@ export default {
       imgSrc: process.env.VUE_APP_BASE_API,
       codeUrl: "",
       loginForm: {
-        username: "admin",
-        password: "admin123",
+        username: "",
+        password: "",
         rememberMe: true,
         code: "",
         uuid: "",
@@ -197,11 +197,13 @@ export default {
               Cookies.remove("password");
               Cookies.remove("rememberMe");
             }
+
+            //.push({ path: this.redirect || "/barcode" })
             this.$store
               .dispatch("Login", this.loginForm)
               .then(() => {
                 this.$router
-                  .push({ path: this.redirect || "/" })
+                  .push({ path: this.redirect || "/index" })
                   .catch(() => {});
               })
               .catch(() => {
@@ -296,7 +298,7 @@ export default {
   position: fixed;
   top: 20px;
   left: 20px;
-  width: 221px;
+  width: 246px;
   height: 80px;
 }
 </style>

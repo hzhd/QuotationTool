@@ -27,26 +27,8 @@ public class RuoYiApplication {
 //    	AjaxResult result=controller.getTeamCountByType(null);
 //    	System.out.println(JSONObject.toJSONString(result));
         //************************************
-        String banner = "         ollllo ollllllllllove       \n" +
-                "          vllve  vlloveeeevllle      \n" +
-                "           lle    lle       olo      \n" +
-                "           lle    lle       vll      \n" +
-                "           lle    lle       vll      \n" +
-                "           lle    lle       olo      \n" +
-                "           lle    lle      vlle      \n" +
-                "           lle    lle    eoloe       \n" +
-                "           lle    lle evlllo         \n" +
-                "           lle    llollovvollv       \n" +
-                "           lle    llve     elloe     \n" +
-                "           lle    lle        llo     \n" +
-                "    vov    lle    lle        vlle    \n" +
-                "   vllo    lle    lle        ellv    \n" +
-                "   ooe     lle    lle        elle    \n" +
-                "   lv     ell     lle        olle    \n" +
-                "   oo     vlo     lle       vllv     \n" +
-                "   elve  vlle    vlloeeeevvlllv      \n" +
-                "    eolllloe    ollllllllllove       \n" +
-                "       ee                            ";
-        System.out.println("(♥◠‿◠)ﾉﾞ  敬博启动成功   ლ(´ڡ`ლ)ﾞ  \n" + banner);
+        String banner = "";
+        //博世热力询价系统启动成功
+        System.out.println("(♥◠‿◠)ﾉﾞ  Bosch thermal quotation system started successfully!   ლ(´ڡ`ლ)ﾞ  \n" + banner);
     }
 }

@@ -1,11 +1,16 @@
 package com.ruoyi.framework.web.service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import com.ruoyi.framework.sso.HttpResponseEnum;
+import com.ruoyi.framework.sso.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
@@ -26,6 +31,10 @@ import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.framework.security.context.AuthenticationContextHolder;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * 登录校验方法
@@ -49,6 +58,12 @@ public class SysLoginService
 
     @Autowired
     private ISysConfigService configService;
+
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    SysLoginService sysLoginService;
 
     /**
      * 登录验证
@@ -137,5 +152,27 @@ public class SysLoginService
         sysUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         sysUser.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(sysUser);
+    }
+
+    public ResultData verifyLoginUserByBoschId(String boschId) throws UnsupportedEncodingException {
+        ResultData resultData = ResultData.ok();
+
+        LoginUser loginUser = (LoginUser)userDetailsService.loadUserByUsername(boschId);
+//        CustomUserDetails userDetails = (CustomUserDetails)templateUserDetailsService.loadUserByUsername(boschId);
+        if (null != loginUser) {
+            HttpServletRequest request =
+                    ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+            UsernamePasswordAuthenticationToken templateAuthentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+            templateAuthentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            String jwtToken = tokenService.createToken(loginUser);//jwtService.createToken(templateAuthentication);
+
+            sysLoginService.recordLoginInfo(loginUser.getUserId());
+
+            return ResultData.ok().putDataValue("token", jwtToken);
+        } else {
+            resultData.setCode(HttpResponseEnum.USER_NOT_FOUND.getResponseCode());
+            resultData.setMessage(HttpResponseEnum.USER_NOT_FOUND.getResponseMSG());
+            return resultData;
+        }
     }
 }

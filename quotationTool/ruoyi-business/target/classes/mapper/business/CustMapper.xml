@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.business.mapper.CustMapper">
+
+	<resultMap type="com.ruoyi.business.media.domain.ScreenFuncConfig" id="ScreenFuncConfigResult">
+        <result property="funcCode"    column="func_code"    />
+        <result property="funcName"    column="func_name"    />
+        <result property="contentLayout"    column="content_layout"    />
+    </resultMap>
+    <!-- *********************大屏功能配置 -->
+	<select id="getScreenFuncConfig" resultMap="ScreenFuncConfigResult" parameterType="java.lang.String">
+		SELECT func_code,func_name,content_layout from t_scree_func_config where func_code=#{funcCode}
+	</select>
+	<update id="replaceScreenFuncConfig" parameterType="com.ruoyi.business.media.domain.ScreenFuncConfig">
+		REPLACE INTO t_scree_func_config(func_code,func_name,content_layout)VALUES(#{funcCode},#{funcName},#{contentLayout})
+	</update>
+	<!-- *********************按团队类型统计团队数量 -->
+	<select id="getTeamCountByType" resultType="java.util.Map">
+		SELECT b.`dict_label` teamType,COUNT(0) teamNum FROM sys_dict_type a INNER JOIN sys_dict_data b ON(a.`dict_type`=b.`dict_type`) 
+		INNER JOIN  t_team c ON(b.`dict_value`=c.`team_type` AND b.`dict_type`='team_type')  GROUP BY c.`team_type`
+	</select>
+	<select id="selectDictLabel" resultType="java.lang.String" parameterType="java.util.Map"  >
+		select dict_label from sys_dict_data
+		where dict_type = #{dictType} and dict_value = #{dictValue}
+	</select>
+    
+</mapper> 
